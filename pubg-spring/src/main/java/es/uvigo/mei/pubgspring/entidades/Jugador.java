@@ -3,11 +3,17 @@ package es.uvigo.mei.pubgspring.entidades;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Jugador implements Serializable {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String cuenta;
 
     private String nombre;
@@ -19,6 +25,14 @@ public class Jugador implements Serializable {
     public Jugador(String cuenta, String nombre) {
         this.cuenta = cuenta;
         this.nombre = nombre;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getCuenta() {
@@ -37,34 +51,22 @@ public class Jugador implements Serializable {
         this.nombre = nombre;
     }
 
-
     @Override
-    public int hashCode() {
-        int hash = Objects.hashCode(this.cuenta);
-        return hash;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Jugador jugador = (Jugador) o;
+        return Objects.equals(id, jugador.id) && Objects.equals(cuenta, jugador.cuenta) && Objects.equals(nombre, jugador.nombre);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Jugador other = (Jugador) obj;
-        if (!Objects.equals(this.cuenta, other.cuenta)) {
-            return false;
-        }
-        return true;
+    public int hashCode() {
+        return Objects.hash(id, cuenta, nombre);
     }
 
     @Override
     public String toString() {
-        return "Jugador{" + "cuenta=" + cuenta + ", nombre=" + nombre + '}';
+        return "Jugador{" + "id=" + id + "cuenta=" + cuenta + ", nombre=" + nombre + '}';
     }
 
 }

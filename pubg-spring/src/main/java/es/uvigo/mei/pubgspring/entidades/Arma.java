@@ -131,46 +131,12 @@ public class Arma implements Serializable {
         this.n_disparos_matar_cabeza = n_disparos_matar_cabeza;
     }
 
-    @Override
-    public int hashCode() {
-        if (this.id != null) {
-            return this.id.hashCode();
-        }
-        int hash = 5;
-        hash = 31 * hash + Objects.hashCode(this.nombre);
-        hash = 31 * hash + Objects.hashCode(this.descripcion);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Articulo other = (Articulo) obj;
-        if (this.id != null) {
-            return this.id.equals(other.getId());
-        }
-        if (!Objects.equals(this.nombre, other.nombre)) {
-            return false;
-        }
-        if (!Objects.equals(this.descripcion, other.descripcion)) {
-            return false;
-        }
-        return true;
-    }
 
 
 
     @Override
     public String toString() {
-        return "Arma{" + "id=" + id + ", nombre=" + nombre + ", familia=" + familia + '}';
+        return "Arma{" + "id=" + id + ", nombre=" + nombre + '}';
     }
 
 

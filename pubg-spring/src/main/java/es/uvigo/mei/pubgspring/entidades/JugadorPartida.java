@@ -2,6 +2,7 @@ package es.uvigo.mei.pubgspring.entidades;
 
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -9,60 +10,58 @@ import javax.persistence.IdClass;
 import javax.persistence.ManyToOne;
 
     @Entity
-    @IdClass(ArticuloAlmacenId.class)
+    @IdClass(JugadorPartidaId.class)
     public class JugadorPartida implements Serializable {
 
         @Id
         @ManyToOne
-        private Articulo articulo;
+        private Jugador jugador;
 
         @Id
         @ManyToOne
-        private Almacen almacen;
+        private Partida partida;
 
-        private Integer stock;
+        private Date fecha;
 
-        public ArticuloAlmacen() {
+        public JugadorPartida() {
         }
 
-        public ArticuloAlmacen(Articulo articulo, Almacen almacen, Integer stock) {
-            this.articulo = articulo;
-            this.almacen = almacen;
-            this.stock = stock;
+        public JugadorPartida(Jugador jugador, Partida partida, Date fecha) {
+            this.jugador = jugador;
+            this.partida = partida;
+            this.fecha = fecha;
         }
 
-
-
-        public Articulo getArticulo() {
-            return articulo;
+        public Jugador getJugador() {
+            return jugador;
         }
 
-        public void setArticulo(Articulo articulo) {
-            this.articulo = articulo;
+        public void setJugador(Jugador jugador) {
+            this.jugador = jugador;
         }
 
-        public Almacen getAlmacen() {
-            return almacen;
+        public Partida getPartida() {
+            return partida;
         }
 
-        public void setAlmacen(Almacen almacen) {
-            this.almacen = almacen;
+        public void setPartida(Partida partida) {
+            this.partida = partida;
         }
 
-        public Integer getStock() {
-            return stock;
+        public Date getFecha() {
+            return fecha;
         }
 
-        public void setStock(Integer stock) {
-            this.stock = stock;
+        public void setFecha(Date fecha) {
+            this.fecha = fecha;
         }
 
         @Override
         public int hashCode() {
             int hash = 5;
-            hash = 53 * hash + Objects.hashCode(this.articulo);
-            hash = 53 * hash + Objects.hashCode(this.almacen);
-            hash = 53 * hash + Objects.hashCode(this.stock);
+            hash = 53 * hash + Objects.hashCode(this.jugador);
+            hash = 53 * hash + Objects.hashCode(this.partida);
+            hash = 53 * hash + Objects.hashCode(this.fecha);
             return hash;
         }
 
@@ -77,14 +76,14 @@ import javax.persistence.ManyToOne;
             if (getClass() != obj.getClass()) {
                 return false;
             }
-            final ArticuloAlmacen other = (ArticuloAlmacen) obj;
-            if (!Objects.equals(this.articulo, other.articulo)) {
+            final JugadorPartida other = (JugadorPartida) obj;
+            if (!Objects.equals(this.partida, other.partida)) {
                 return false;
             }
-            if (!Objects.equals(this.almacen, other.almacen)) {
+            if (!Objects.equals(this.jugador, other.jugador)) {
                 return false;
             }
-            if (!Objects.equals(this.stock, other.stock)) {
+            if (!Objects.equals(this.fecha, other.fecha)) {
                 return false;
             }
             return true;
@@ -92,5 +91,5 @@ import javax.persistence.ManyToOne;
 
 
 
-    }
+
 }

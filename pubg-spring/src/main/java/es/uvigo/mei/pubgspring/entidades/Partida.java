@@ -3,7 +3,6 @@ package es.uvigo.mei.pubgspring.entidades;
 
 import java.io.Serializable;
 import java.util.Objects;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,22 +19,22 @@ public class Partida implements Serializable {
     private int duracion;
     private String mapa;
     private String modo;
-    private int tam_equipo;
-    private boolean es_evento;
-    private boolean es_juegocustom;
+    private int tamEq;
+    private boolean esEvento;
+    private boolean esJuegocustom;
 
     public Partida() {
     }
 
-    public Partida(String area, String camara, int duracion, String mapa, String modo, int tam_equipo, boolean es_evento, boolean es_juegocustom) {
+    public Partida(String area, String camara, int duracion, String mapa, String modo, int tamEq, boolean esEvento, boolean esJuegocustom) {
         this.area = area;
         this.camara = camara;
         this.duracion = duracion;
         this.mapa = mapa;
         this.modo = modo;
-        this.tam_equipo = tam_equipo;
-        this.es_evento = es_evento;
-        this.es_juegocustom = es_juegocustom;
+        this.tamEq = tamEq;
+        this.esEvento = esEvento;
+        this.esJuegocustom = esJuegocustom;
     }
 
     public Long getId() {
@@ -86,28 +85,28 @@ public class Partida implements Serializable {
         this.modo = modo;
     }
 
-    public int getTam_equipo() {
-        return tam_equipo;
+    public int getTamEq() {
+        return tamEq;
     }
 
-    public void setTam_equipo(int tam_equipo) {
-        this.tam_equipo = tam_equipo;
+    public void setTamEq(int tamEq) {
+        this.tamEq = tamEq;
     }
 
-    public boolean isEs_evento() {
-        return es_evento;
+    public boolean getEsEvento() {
+        return esEvento;
     }
 
-    public void setEs_evento(boolean es_evento) {
-        this.es_evento = es_evento;
+    public void setEsEvento(boolean esEvento) {
+        this.esEvento = esEvento;
     }
 
-    public boolean isEs_juegocustom() {
-        return es_juegocustom;
+    public boolean getEsJuegocustom() {
+        return esJuegocustom;
     }
 
-    public void setEs_juegocustom(boolean es_juegocustom) {
-        this.es_juegocustom = es_juegocustom;
+    public void setEsJuegocustom(boolean esJuegocustom) {
+        this.esJuegocustom = esJuegocustom;
     }
 
     @Override

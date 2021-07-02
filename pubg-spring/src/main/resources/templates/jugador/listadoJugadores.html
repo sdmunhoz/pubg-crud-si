@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html th:replace="~{fragmentos/plantilla::pagina(~{this::title}, ~{this::body})}" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>Listado de jugadores</title>
+</head>
+
+<body>
+<h1 class="center-text">Listado de jugadores</h1>
+
+<form th:action="@{/jugador}" method="post" class="form-horizontal" id="buscar-form">
+  <div class="row">
+    <div class="col-10 form-group">
+      <div class="control-group row" id="nombre">
+        <label class="col-2 control-label">Nombre</label>
+        <input class="col-10 form-control" th:name="nombreJugador" size="30" maxlength="80" />
+      </div>
+      <div class="control-group row" id="cuenta">
+        <label class="col-2 control-label">Cuenta</label>
+        <input class="col-10 form-control" th:name="cuentaJugador" size="30" maxlength="80" />
+      </div>
+      <div class="control-group row" id="partida">
+        <label class="col-2 control-label">Partida</label>
+        <select class="col-10 form-control" th:name="idPartida">
+          <option th:each="partida : ${partidas}" th:value="${partida.id}" th:text="${partida.mapa}">Nombre partida</option>
+        </select>
+      </div>
+
+    </div>
+
+
+    <div class="col-2 form-group">
+      <button type="submit" class="btn btn-lg btn-block btn-primary">Buscar</button>
+      <button type="submit" class="btn btn-lg btn-block btn-primary">Buscar todos</button>
+    </div>
+  </div>
+</form>
+
+
+<table id="jugadores" class="table table-striped">
+  <thead>
+  <tr>
+    <th>Id</th>
+    <th>Cuenta</th>
+    <th>Nombre</th>
+    <th />
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="jugador : ${jugadores}">
+    <td th:text="${jugador.id}" />
+    <td><a th:href="@{/jugadores/__${jugador.id}__}" th:text="${jugador.nombre}"></a></td>
+    <td th:text="${jugador.cuenta}" />
+    <td><a class="btn btn-primary" th:href="@{/jugadores/__${jugador.id}__}">Editar</a> <a
+            class="btn btn-primary" th:href="@{/jugadores/__${jugador.id}__/eliminar}"
+    >Borrar</a></td>
+  </tr>
+  </tbody>
+</table>
+
+<br />
+
+<a class="col-2 btn btn-lg btn-block btn-primary" th:href="@{/jugadores/nuevo}">Nuevo jugador</a>
+</body>
+</html>

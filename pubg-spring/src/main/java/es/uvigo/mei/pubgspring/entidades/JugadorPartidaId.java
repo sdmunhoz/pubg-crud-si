@@ -1,5 +1,6 @@
 package es.uvigo.mei.pubgspring.entidades;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 public class JugadorPartidaId implements Serializable {
