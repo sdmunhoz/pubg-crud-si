@@ -52,7 +52,7 @@ public class JugadorController {
         modelo.addAttribute("jugadores", jugadores);
         modelo.addAttribute("nombreJugador", "");
         modelo.addAttribute("cuentaJugador", "");
-        return "jugador/listadoJugadores";
+        return "jugadores/listadoJugadores";
     }
 
     /**
@@ -61,25 +61,21 @@ public class JugadorController {
      */
     @PostMapping
     public String actualizarListarJugadores(@RequestParam(required = false) String nombreJugador,
-                                            @RequestParam(required = false) String cuentaJugador, @RequestParam(required = false) Long idPartida,
+                                            @RequestParam(required = false) String cuentaJugador,
+                                            @RequestParam(required = false) Long idPartida,
                                             Model modelo) {
         List<Jugador> jugadores;
-        System.out.println('1');
         if (idPartida != null) {
             jugadores = jugadorService.buscarPorPartidaId(idPartida);
-            System.out.println('1');
         } else if ((nombreJugador != null) && !nombreJugador.isEmpty()) {
-            System.out.println('2');
             jugadores = jugadorService.buscarPorNombre(nombreJugador);
         } else if ((cuentaJugador != null) && !cuentaJugador.isEmpty()) {
-            System.out.println('3');
             jugadores = jugadorService.buscarPorCuenta(cuentaJugador);
         } else {
-            System.out.println('4');
             jugadores = jugadorService.buscarTodos();
         }
         modelo.addAttribute("jugadores", jugadores);
-        return "jugador/listadoJugadores";
+        return "jugadores/listadoJugadores";
     }
 
     /**
@@ -109,7 +105,7 @@ public class JugadorController {
         result.addObject("jugador", jugador);
         result.addObject("esNuevo", true);
         result.addObject("partidasJugador", new ArrayList<>());
-        result.setViewName("jugador/editarJugador");
+        result.setViewName("jugadores/editarJugador");
         return result;
     }
 
@@ -139,8 +135,7 @@ public class JugadorController {
             Jugador jugador = jugadorService.buscarPorId(id);
             modelo.addAttribute("jugador", jugador);
             modelo.addAttribute("esNuevo", false);
-            modelo.addAttribute("partidasJugador", jugadorService.buscarJugadorPartidaPorJugadorId(id));
-            return "jugador/editarJugador";
+            return "jugadores/editarJugador";
         } catch (EntityNotFoundException e) {
             modelo.addAttribute("error", "Jugador no encontrado");
             return "error";

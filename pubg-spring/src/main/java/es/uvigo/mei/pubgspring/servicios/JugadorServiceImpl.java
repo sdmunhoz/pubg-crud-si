@@ -62,7 +62,7 @@ public class JugadorServiceImpl implements JugadorService {
     @Override
     @Transactional(readOnly = true)
     public List<Jugador> buscarPorCuenta(String cuenta) {
-        return jugadorDAO.findByCuenta(cuenta);
+        return jugadorDAO.findByCuentaContaining(cuenta);
     }
 
     @Override

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html th:replace="~{fragmentos/plantilla::pagina(~{this::title}, ~{this::body})}" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>Editar/crear Jugador</title>
+</head>
+
+<body>
+<h1 class="center-text" th:text="${esNuevo} ? 'Crear Jugador' : 'Editar Jugador'"></h1>
+
+<form th:object="${jugador}" class="form-horizontal" id="jugador-form" method="post">
+  <div class="form-group has-feedback">
+
+    <div class="form-group row">
+      <label class="col-2 control-label">Id</label>
+      <label class="col-10 form-control" th:text="${esNuevo} ? '-' : *{id}"></label>
+      <label class="col-2 control-label">Cuenta</label>
+      <input class="col-10 form-control" th:field="*{cuenta}" size="30" maxlength="100" />
+      <label class="col-2 control-label">Nombre</label>
+      <input class="col-10 form-control" th:field="*{nombre}" size="30" maxlength="100" />
+    </div>
+
+    <div class="form-group">
+      <button class="btn btn-lg btn-block btn-primary col-2" th:text="${esNuevo} ? 'Crear' : 'Guardar'" type="submit">Guardar</button>
+
+      <a class="btn btn-lg btn-block btn-secondary col-2" th:href="@{/jugadores/}">Cancelar</a>
+    </div>
+
+
+  </div>
+
+</form>
+
+
+
+</body>
+</html>
