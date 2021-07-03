@@ -18,7 +18,7 @@ public interface PartidaService {
     public List<Partida> buscarPorTamEq(int tamEq);
     public List<Partida> buscarPorEsEvento(boolean esEvento);
     public List<Partida> buscarPorEsJuegocustom(boolean esJuegocustom);
-    /*public List<Partida> buscarPorJugador(Long idJugador);*/
+    public List<Partida> buscarPorJugadorId(Long idJugador);
 
 
 

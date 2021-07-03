@@ -11,14 +11,7 @@
 <form th:action="@{/partidas}" method="post" class="form-horizontal" id="buscar-form">
   <div class="row">
     <div class="col-10 form-group">
-      <div class="control-group row" id="area">
-        <label class="col-2 control-label">Area</label>
-        <input class="col-10 form-control" th:name="areaPartida" size="30" maxlength="80" />
-      </div>
-      <div class="control-group row" id="camara">
-        <label class="col-2 control-label">Camara</label>
-        <input class="col-10 form-control" th:name="camaraPartida" size="30" maxlength="80" />
-      </div>
+
       <div class="control-group row" id="mapa">
         <label class="col-2 control-label">Mapa</label>
         <input class="col-10 form-control" th:name="mapaPartida" size="30" maxlength="80" />
@@ -27,7 +20,13 @@
         <label class="col-2 control-label">Modo</label>
         <input class="col-10 form-control" th:name="modoPartida" size="30" maxlength="80" />
       </div>
-
+      <div class="control-group row" id="jugador">
+        <label class="col-2 control-label">Jugador</label>
+        <select class="col-10 form-control" th:name="idJugador">
+          <option value="" selected disabled hidden>Seleccione jugador</option>
+          <option th:each="jugador : ${jugadores}" th:value="${jugador.id}" th:text="${jugador.cuenta + '-' + jugador.nombre}"></option>
+        </select>
+      </div>
 
     </div>
 
@@ -66,7 +65,9 @@
     <td th:text="${partida.tamEq}" />
     <td th:text="${partida.esEvento}" />
     <td th:text="${partida.esJuegocustom}" />
-    <td><a class="btn btn-primary" th:href="@{/partidas/__${partida.id}__}">Editar</a> </td>
+    <td><a class="btn btn-primary" th:href="@{/partidas/__${partida.id}__}">Editar</a> <a
+            class="btn btn-primary" th:href="@{/partidas/__${partida.id}__/eliminar}"
+    >Borrar</a></td>
   </tr>
   </tbody>
 </table>

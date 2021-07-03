@@ -85,6 +85,12 @@ public class JugadorController {
     public String borrarJugador(@PathVariable("id") Long id, Model modelo) {
         Jugador jugador = jugadorService.buscarPorId(id);
         if (jugador != null) {
+            List<JugadorPartida> jugadorPartida = (List<JugadorPartida>) jugadorService.buscarJugadorPartidaPorJugadorId(jugador.getId());
+            if(jugadorPartida!=null) {
+                for (JugadorPartida jp : jugadorPartida) {
+                    jugadorService.eliminarJugadorPartida(jp);
+                }
+            }
             jugadorService.eliminar(jugador);
             return "redirect:/jugadores";
         } else {

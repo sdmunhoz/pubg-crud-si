@@ -92,11 +92,11 @@ public class PartidaServiceImpl implements PartidaService {
         return partidaDAO.findByEsJuegocustomContaining(esJuegocustom);
     }
 
-   /* @Override
+    @Override
     @Transactional(readOnly = true)
-    public List<Partida> buscarPorJugador(Long idJugador) {
+    public List<Partida> buscarPorJugadorId(Long idJugador) {
         return partidaDAO.findByJugadorId(idJugador);
-    }*/
+    }
 
 
 }

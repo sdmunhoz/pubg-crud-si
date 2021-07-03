@@ -1,6 +1,7 @@
 package es.uvigo.mei.pubgspring.controladores;
 
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
@@ -22,6 +23,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import es.uvigo.mei.pubgspring.entidades.Partida;
 import es.uvigo.mei.pubgspring.servicios.PartidaService;
+import es.uvigo.mei.pubgspring.entidades.Jugador;
+import es.uvigo.mei.pubgspring.entidades.JugadorPartida;
+import es.uvigo.mei.pubgspring.servicios.JugadorService;
+
 
 @Controller
 @RequestMapping("/partidas")
@@ -29,6 +34,13 @@ public class PartidaController {
     @Autowired
     PartidaService partidaService;
 
+    @Autowired
+    JugadorService jugadorService;
+
+    @ModelAttribute("jugadores")
+    public List<Jugador> crearListaJugadores() {
+        return jugadorService.buscarTodos();
+    }
 
     @GetMapping
     public String prepararListarPartidas(Model modelo) {
@@ -41,18 +53,17 @@ public class PartidaController {
         modelo.addAttribute("tamEquipoPartida", "");
         modelo.addAttribute("esEventoPartida", "");
         modelo.addAttribute("esJuegocustomPartida", "");
-        return "partida/listadoPartidas";
+        return "partidas/listadoPartidas";
     }
 
     @PostMapping
-    public String actualizarListarPartida(@RequestParam(required = false) String areaPartida,@RequestParam(required = false) String camaraPartida,
-                                          @RequestParam(required = false) String mapaPartida, @RequestParam(required = false) String modoPartida,
+    public String actualizarListarPartida(@RequestParam(required = false) Long idJugador,
+                                          @RequestParam(required = false) String mapaPartida,
+                                          @RequestParam(required = false) String modoPartida,
                                            Model modelo) {
         List<Partida> partidas;
-        if ((areaPartida != null) && !areaPartida.isEmpty()) {
-            partidas = partidaService.buscarPorArea(areaPartida);
-        } else if ((camaraPartida != null) && !camaraPartida.isEmpty()) {
-            partidas = partidaService.buscarPorCamara(camaraPartida);
+        if (idJugador != null) {
+            partidas = partidaService.buscarPorJugadorId(idJugador);
         } else if ((mapaPartida != null) && !mapaPartida.isEmpty()) {
             partidas = partidaService.buscarPorMapa(mapaPartida);
         } else if ((modoPartida != null) && !modoPartida.isEmpty()) {
@@ -61,7 +72,7 @@ public class PartidaController {
             partidas = partidaService.buscarTodos();
         }
         modelo.addAttribute("partidas", partidas);
-        return "partida/listadoPartidas";
+        return "partidas/listadoPartidas";
     }
 
     @GetMapping("nuevo")
@@ -71,7 +82,7 @@ public class PartidaController {
         ModelAndView result = new ModelAndView();
         result.addObject("partida", partida);
         result.addObject("esNuevo", true);
-        result.setViewName("partida/editarPartida");
+        result.setViewName("partidas/editarPartida");
         return result;
     }
 
@@ -89,16 +100,18 @@ public class PartidaController {
     public String prepararEditarPartida(@PathVariable("id") Long id, Model modelo) {
         try {
             Partida partida = partidaService.buscarPorId(id);
+            List<JugadorPartida> jugadoresPartida = jugadorService.buscarJugadorPartidaPorPartidaId(id);
             modelo.addAttribute("partida", partida);
             modelo.addAttribute("esNuevo", false);
-            return "partida/editarPartida";
+            modelo.addAttribute("jugadoresPartida", jugadoresPartida);
+            return "partidas/editarPartida";
         } catch (EntityNotFoundException e) {
             modelo.addAttribute("error", "Partida no encontrada");
             return "error";
         }
     }
 
-    @PostMapping("{id}")
+    @PostMapping(path="{id}", params="actualizar")
     public String actualizarPartida(@Valid @ModelAttribute Partida partida, BindingResult resultado) {
         if (!resultado.hasErrors()) {
             partidaService.modificar(partida);
@@ -107,4 +120,47 @@ public class PartidaController {
             return null;
         }
     }
+
+    @PostMapping(path = "{id}", params = "anadirPartida")
+    public String anadirJugador(@PathVariable("id") Long idPartida, @RequestParam("idJugador") Long idJugador,
+                                @RequestParam("fecha") Date fecha) {
+        if ((idJugador != null) && (fecha != null)) {
+            Partida partida = partidaService.buscarPorId(idPartida);
+            Jugador jugador = jugadorService.buscarPorId(idJugador);
+            jugadorService.crearJugadorPartida(new JugadorPartida(jugador, partida, fecha));
+        }
+        return "redirect:/partidas/3";
+    }
+
+    @PostMapping(path = "{id}", params = "eliminarJugador")
+    public String eliminarJugador(@PathVariable("id") Long idPartida, @RequestParam("eliminarJugador") Long idJugador) {
+
+        if (idPartida != null) {
+            jugadorService.eliminarJugadorPartida(idJugador, idPartida);
+        }
+        return "redirect:/partidas/"+idPartida;
+    }
+
+
+    /**
+     * @PathVariable vincula el parametro a un segmento de la URI
+     */
+    @GetMapping("{id}/eliminar")
+    public String borrarPartida(@PathVariable("id") Long id, Model modelo) {
+        Partida partida = partidaService.buscarPorId(id);
+        if (partida != null) {
+            List<JugadorPartida> jugadorPartida = (List<JugadorPartida>) jugadorService.buscarJugadorPartidaPorPartidaId(id);
+            if(jugadorPartida!=null) {
+                for (JugadorPartida jp : jugadorPartida) {
+                    jugadorService.eliminarJugadorPartida(jp);
+                }
+            }
+            partidaService.eliminar(partida);
+            return "redirect:/partidas";
+        } else {
+            modelo.addAttribute("mensajeError", "Partida no encontrada");
+            return "error";
+        }
+    }
+
 }
