@@ -9,13 +9,13 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Parametros implements Serializable {
+public class Parametro implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Id
+
     @ManyToOne
     private Ubicacion ubicacion;
 
@@ -25,9 +25,9 @@ public class Parametros implements Serializable {
 
     private boolean esZonaRoja;
 
-    public Parametros(){}
+    public Parametro(){}
 
-    public Parametros(Long id, Ubicacion ubicacion, String tamCupula, boolean esZonaAzul, boolean esZonaRoja) {
+    public Parametro(Long id, Ubicacion ubicacion, String tamCupula, boolean esZonaAzul, boolean esZonaRoja) {
         this.id = id;
         this.ubicacion = ubicacion;
         this.tamCupula = tamCupula;
@@ -79,7 +79,7 @@ public class Parametros implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Parametros that = (Parametros) o;
+        Parametro that = (Parametro) o;
         return esZonaAzul == that.esZonaAzul && esZonaRoja == that.esZonaRoja && Objects.equals(id, that.id) && Objects.equals(ubicacion, that.ubicacion) && Objects.equals(tamCupula, that.tamCupula);
     }
 
@@ -90,7 +90,7 @@ public class Parametros implements Serializable {
 
     @Override
     public String toString() {
-        return "Parametros{" +
+        return "Parametro{" +
                 "id=" + id +
                 ", ubicacion=" + ubicacion +
                 ", tamCupula='" + tamCupula + '\'' +

@@ -5,7 +5,9 @@ import java.util.List;
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 
+import es.uvigo.mei.pubgspring.entidades.Parametro;
 import es.uvigo.mei.pubgspring.entidades.Ubicacion;
+import es.uvigo.mei.pubgspring.servicios.ParametroService;
 import es.uvigo.mei.pubgspring.servicios.UbicacionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class UbicacionController {
     @Autowired
     UbicacionService ubicacionService;
+    ParametroService parametrosService;
 
 
     /**
@@ -121,6 +124,26 @@ public class UbicacionController {
             modelo.addAttribute("error", "ubicacion no encontrada");
             return "error";
         }
+    }
+
+    @GetMapping("/parametros/{id}")
+    public String prepararEditarParametros(@PathVariable("id") Long id, Model modelo) {
+        try {
+            Ubicacion ubicacion = ubicacionService.buscarPorId(id);
+            modelo.addAttribute("ubicacion", ubicacion);
+            modelo.addAttribute("esNuevo", false);
+            return "ubicaciones/listadoParametros";
+        } catch (EntityNotFoundException e) {
+            modelo.addAttribute("error", "parametros de ubicacion no encontrados");
+            return "error";
+        }
+    }
+
+    @GetMapping("/parametros")
+    public String prepararListarParametros(Model modelo) {
+        List<Parametro> parametros = parametrosService.buscarTodos();
+        modelo.addAttribute("parametros", parametros);
+        return "ubicaciones/listadoUbicaciones";
     }
 
     @PostMapping("{id}")

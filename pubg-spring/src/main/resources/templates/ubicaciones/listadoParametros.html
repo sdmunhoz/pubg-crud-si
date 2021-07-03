@@ -2,13 +2,13 @@
 <html th:replace="~{fragmentos/plantilla::pagina(~{this::title}, ~{this::body})}" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <title>Listado de ubicaciones</title>
+  <title>Listado de parametros</title>
 </head>
 
 <body>
-<h1 class="center-text">Listado de ubicaciones</h1>
+<h1 class="center-text">Listado de parametros</h1>
 
-<form th:action="@{/ubicaciones}" method="post" class="form-horizontal" id="buscar-form">
+<form th:action="@{/parametros}" method="post" class="form-horizontal" id="buscar-form">
   <div class="row">
     <div class="col-10 form-group">
       <div class="control-group row" id="zona">

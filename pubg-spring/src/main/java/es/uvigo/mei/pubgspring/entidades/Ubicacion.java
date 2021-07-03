@@ -2,11 +2,10 @@ package es.uvigo.mei.pubgspring.entidades;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Ubicacion implements Serializable {
@@ -14,6 +13,9 @@ public class Ubicacion implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @OneToMany(mappedBy = "ubicacion", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Parametro> parametros = new ArrayList<>();
 
     private String zona;
 
@@ -49,6 +51,29 @@ public class Ubicacion implements Serializable {
 
     public void setTiempo(String tiempo) {
         this.tiempo = tiempo;
+    }
+
+    public void anadirParametro(Parametro nuevoParametro) {
+        nuevoParametro.setUbicacion(this);
+    }
+
+    protected void anadirParametroInterno(Parametro nuevoParametro) {
+        if (parametros == null) {
+            this.parametros = new ArrayList<>();
+        }
+        if (!this.parametros.contains(nuevoParametro)) {
+            this.parametros.add(nuevoParametro);
+        }
+    }
+
+    public void eliminarParametro(Parametro parametro) {
+        parametro.setUbicacion(null);
+    }
+
+    protected void eliminarParametroInterno(Parametro parametro) {
+        if (parametros != null) {
+            this.parametros.remove(parametro);
+        }
     }
 
     @Override
