@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html th:replace="~{fragmentos/plantilla::pagina(~{this::title}, ~{this::body})}" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>Listado de partidas</title>
+</head>
+
+<body>
+<h1 class="center-text">Listado de partidas</h1>
+
+<form th:action="@{/partidas}" method="post" class="form-horizontal" id="buscar-form">
+  <div class="row">
+    <div class="col-10 form-group">
+      <div class="control-group row" id="area">
+        <label class="col-2 control-label">Area</label>
+        <input class="col-10 form-control" th:name="areaPartida" size="30" maxlength="80" />
+      </div>
+      <div class="control-group row" id="camara">
+        <label class="col-2 control-label">Camara</label>
+        <input class="col-10 form-control" th:name="camaraPartida" size="30" maxlength="80" />
+      </div>
+      <div class="control-group row" id="mapa">
+        <label class="col-2 control-label">Mapa</label>
+        <input class="col-10 form-control" th:name="mapaPartida" size="30" maxlength="80" />
+      </div>
+      <div class="control-group row" id="modo">
+        <label class="col-2 control-label">Modo</label>
+        <input class="col-10 form-control" th:name="modoPartida" size="30" maxlength="80" />
+      </div>
+
+
+    </div>
+
+
+    <div class="col-2 form-group">
+      <button type="submit" class="btn btn-lg btn-block btn-primary">Buscar</button>
+      <button type="submit" class="btn btn-lg btn-block btn-primary">Buscar todos</button>
+    </div>
+  </div>
+</form>
+
+
+<table id="partidas" class="table table-striped">
+  <thead>
+  <tr>
+    <th>Id</th>
+    <th>Area</th>
+    <th>Camara</th>
+    <th>Duracion</th>
+    <th>Mapa</th>
+    <th>Modo</th>
+    <th>Tam Equipo</th>
+    <th>Es Evento</th>
+    <th>Es Juegocustom</th>
+    <th />
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="partida : ${partidas}">
+    <td th:text="${partida.id}" />
+    <td><a th:href="@{/partidas/__${partida.id}__}" th:text="${partida.area}"></a></td>
+    <td th:text="${partida.camara}"/>
+    <td th:text="${partida.duracion}"/>
+    <td th:text="${partida.mapa}"/>
+    <td th:text="${partida.modo}" />
+    <td th:text="${partida.tamEq}" />
+    <td th:text="${partida.esEvento}" />
+    <td th:text="${partida.esJuegocustom}" />
+    <td><a class="btn btn-primary" th:href="@{/partidas/__${partida.id}__}">Editar</a> </td>
+  </tr>
+  </tbody>
+</table>
+
+<br />
+
+<a class="col-2 btn btn-lg btn-block btn-primary" th:href="@{/partidas/nuevo}">Nuevo partida</a>
+</body>
+</html>
