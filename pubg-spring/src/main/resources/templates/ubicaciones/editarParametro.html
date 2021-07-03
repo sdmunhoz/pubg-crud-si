@@ -2,11 +2,11 @@
 <html th:replace="~{fragmentos/plantilla::pagina(~{this::title}, ~{this::body})}" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Editar/crear Ubicacion</title>
+    <title>Editar/crear Parametro</title>
 </head>
 
 <body>
-<h1 class="center-text" th:text="${esNuevo} ? 'Crear Ubicacion' : 'Editar Ubicacion'"></h1>
+<h1 class="center-text" th:text="${esNuevo} ? 'Crear Parametro' : 'Editar Parametro'"></h1>
 
 <form th:object="${ubicacion}" class="form-horizontal" id="Ubicacion-form" method="post">
     <div class="form-group has-feedback">
@@ -26,7 +26,7 @@
                     type="submit">Guardar
             </button>
 
-            <a class="btn btn-lg btn-block btn-secondary col-2" th:href="@{/Ubicaciones/}">Cancelar</a>
+            <a class="btn btn-lg btn-block btn-secondary col-2" th:href="@{/Ubicaciones/parametros/}">Cancelar</a>
         </div>
 
     </div>

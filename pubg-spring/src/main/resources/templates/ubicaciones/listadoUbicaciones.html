@@ -44,7 +44,7 @@
     <td><a th:href="@{/ubicacions/__${ubicacion.id}__}" th:text="${ubicacion.zona}"></a></td>
     <td th:text="${ubicacion.tiempo}"/>
     <td><a class="btn btn-primary" th:href="@{/ubicaciones/__${ubicacion.id}__}">Editar</a> </td>
-    <td><a class="btn btn-primary" th:href="@{/ubicaciones/parametros__${ubicacion.id}__}">Ver Parámetros</a> </td>
+    <td><a class="btn btn-primary" th:href="@{/ubicaciones/parametros/__${ubicacion.id}__}">Ver Parámetros</a> </td>
   </tr>
   </tbody>
 </table>

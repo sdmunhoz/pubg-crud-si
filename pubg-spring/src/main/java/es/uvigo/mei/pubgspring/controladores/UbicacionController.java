@@ -126,7 +126,7 @@ public class UbicacionController {
         }
     }
 
-    @GetMapping("/parametros/{id}")
+   /* @GetMapping("/parametros/{id}")
     public String prepararEditarParametros(@PathVariable("id") Long id, Model modelo) {
         try {
             Ubicacion ubicacion = ubicacionService.buscarPorId(id);
@@ -137,13 +137,45 @@ public class UbicacionController {
             modelo.addAttribute("error", "parametros de ubicacion no encontrados");
             return "error";
         }
+    }*/
+
+    @GetMapping("/parametros/{id}")
+    public String prepararListarParametros(@PathVariable("id") Long id, Model modelo) {
+        List<Parametro> parametros = ubicacionService.buscarParametrosPorId(id);
+        modelo.addAttribute("parametros", parametros);
+        return "ubicaciones/listadoParametros";
     }
 
-    @GetMapping("/parametros")
-    public String prepararListarParametros(Model modelo) {
-        List<Parametro> parametros = parametrosService.buscarTodos();
-        modelo.addAttribute("parametros", parametros);
-        return "ubicaciones/listadoUbicaciones";
+    @GetMapping("/parametros/nuevo/{id}")
+    public ModelAndView prepararNuevoParametro(@PathVariable("id") Long id) {
+        Ubicacion ubicacion = ubicacionService.buscarPorId(id);
+        Parametro parametro = new Parametro();
+        ModelAndView result = new ModelAndView();
+        result.addObject("ubicacion", ubicacion);
+        result.addObject("parametro", parametro);
+        result.addObject("esNuevo", true);
+        result.setViewName("ubicaciones/editarParametro");
+        return result;
+    }
+
+    /**
+     * @Valid indica que se apliquen las validaciones BeanValidation declaradas en
+     * el correspondiente tipo
+     * @ModelAttribute vincula con un atributo del Model con el mismo nombre de la
+     * variable (es opcional, el comportamiento por defecto busca en
+     * el Model atributos con los nombres de las variables)
+     * BindingRequest encapsula el resultado del binding de
+     * parametros de la peticion o Model con atributos de los
+     * objetos reales
+     */
+    @PostMapping("/parametros/nuevo")
+    public String crearParametro(@Valid @ModelAttribute Ubicacion ubicacion, BindingResult resultado) {
+        if (!resultado.hasErrors()) {
+            ubicacionService.crear(ubicacion);
+            return "redirect:/ubicaciones";
+        } else {
+            return null;
+        }
     }
 
     @PostMapping("{id}")

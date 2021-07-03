@@ -2,6 +2,7 @@ package es.uvigo.mei.pubgspring.servicios;
 
 import java.util.List;
 
+import es.uvigo.mei.pubgspring.entidades.Parametro;
 import es.uvigo.mei.pubgspring.entidades.Ubicacion;
 
 public interface UbicacionService {
@@ -13,11 +14,15 @@ public interface UbicacionService {
 
     public Ubicacion buscarPorId(Long id);
 
+    public List<Parametro> buscarParametrosPorId(Long id);
+
     public List<Ubicacion> buscarTodos();
 
     public List<Ubicacion> buscarPorZona(String area);
 
     public List<Ubicacion> buscarPorTiempo(String camara);
+
+
 
 
 }
