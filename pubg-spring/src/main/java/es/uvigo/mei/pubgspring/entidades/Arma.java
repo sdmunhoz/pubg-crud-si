@@ -19,35 +19,35 @@ public class Arma implements Serializable {
 
     private String tipo;
 
-    private String tipo_municion;
+    private String tipoMunicion;
 
     private int danho;
 
-    private int capacidad_balas;
+    private int capacidadBalas;
 
     private int rango;
 
-    private String tasa_disparo;
+    private String tasaDisparo;
 
-    private int n_disparos_matar;
+    private int nDisparosMatar;
 
-    private int n_disparos_matar_cabeza;
+    private int nDisparosMatarCabeza;
 
 
     public Arma() {
     }
 
-    public Arma(String nombre, String tipo, String tipo_municion, int danho, int capacidad_balas, int rango,
-                String tasa_disparo, int n_disparos_matar, int n_disparos_matar_cabeza) {
+    public Arma(String nombre, String tipo, String tipoMunicion, int danho, int capacidadBalas,
+                int rango, String tasaDisparo, int nDisparosMatar, int nDisparosMatarCabeza) {
         this.nombre = nombre;
         this.tipo = tipo;
-        this.tipo_municion = tipo_municion;
+        this.tipoMunicion = tipoMunicion;
         this.danho = danho;
-        this.capacidad_balas = capacidad_balas;
+        this.capacidadBalas = capacidadBalas;
         this.rango = rango;
-        this.tasa_disparo = tasa_disparo;
-        this.n_disparos_matar = n_disparos_matar;
-        this.n_disparos_matar_cabeza = n_disparos_matar_cabeza;
+        this.tasaDisparo = tasaDisparo;
+        this.nDisparosMatar = nDisparosMatar;
+        this.nDisparosMatarCabeza = nDisparosMatarCabeza;
     }
 
     public Long getId() {
@@ -74,12 +74,12 @@ public class Arma implements Serializable {
         this.tipo = tipo;
     }
 
-    public String getTipo_municion() {
-        return tipo_municion;
+    public String getTipoMunicion() {
+        return tipoMunicion;
     }
 
-    public void setTipo_municion(String tipo_municion) {
-        this.tipo_municion = tipo_municion;
+    public void setTipoMunicion(String tipoMunicion) {
+        this.tipoMunicion = tipoMunicion;
     }
 
     public int getDanho() {
@@ -90,12 +90,12 @@ public class Arma implements Serializable {
         this.danho = danho;
     }
 
-    public int getCapacidad_balas() {
-        return capacidad_balas;
+    public int getCapacidadBalas() {
+        return capacidadBalas;
     }
 
-    public void setCapacidad_balas(int capacidad_balas) {
-        this.capacidad_balas = capacidad_balas;
+    public void setCapacidadBalas(int capacidadBalas) {
+        this.capacidadBalas = capacidadBalas;
     }
 
     public int getRango() {
@@ -106,28 +106,28 @@ public class Arma implements Serializable {
         this.rango = rango;
     }
 
-    public String getTasa_disparo() {
-        return tasa_disparo;
+    public String getTasaDisparo() {
+        return tasaDisparo;
     }
 
-    public void setTasa_disparo(String tasa_disparo) {
-        this.tasa_disparo = tasa_disparo;
+    public void setTasaDisparo(String tasaDisparo) {
+        this.tasaDisparo = tasaDisparo;
     }
 
-    public int getN_disparos_matar() {
-        return n_disparos_matar;
+    public int getnDisparosMatar() {
+        return nDisparosMatar;
     }
 
-    public void setN_disparos_matar(int n_disparos_matar) {
-        this.n_disparos_matar = n_disparos_matar;
+    public void setnDisparosMatar(int nDisparosMatar) {
+        this.nDisparosMatar = nDisparosMatar;
     }
 
-    public int getN_disparos_matar_cabeza() {
-        return n_disparos_matar_cabeza;
+    public int getnDisparosMatarCabeza() {
+        return nDisparosMatarCabeza;
     }
 
-    public void setN_disparos_matar_cabeza(int n_disparos_matar_cabeza) {
-        this.n_disparos_matar_cabeza = n_disparos_matar_cabeza;
+    public void setnDisparosMatarCabeza(int nDisparosMatarCabeza) {
+        this.nDisparosMatarCabeza = nDisparosMatarCabeza;
     }
 
     @Override
@@ -135,12 +135,12 @@ public class Arma implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Arma arma = (Arma) o;
-        return danho == arma.danho && capacidad_balas == arma.capacidad_balas && rango == arma.rango && n_disparos_matar == arma.n_disparos_matar && n_disparos_matar_cabeza == arma.n_disparos_matar_cabeza && id.equals(arma.id) && nombre.equals(arma.nombre) && Objects.equals(tipo, arma.tipo) && Objects.equals(tipo_municion, arma.tipo_municion) && Objects.equals(tasa_disparo, arma.tasa_disparo);
+        return danho == arma.danho && capacidadBalas == arma.capacidadBalas && rango == arma.rango && nDisparosMatar == arma.nDisparosMatar && nDisparosMatarCabeza == arma.nDisparosMatarCabeza && id.equals(arma.id) && Objects.equals(nombre, arma.nombre) && Objects.equals(tipo, arma.tipo) && Objects.equals(tipoMunicion, arma.tipoMunicion) && Objects.equals(tasaDisparo, arma.tasaDisparo);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nombre, tipo, tipo_municion, danho, capacidad_balas, rango, tasa_disparo, n_disparos_matar, n_disparos_matar_cabeza);
+        return Objects.hash(id, nombre, tipo, tipoMunicion, danho, capacidadBalas, rango, tasaDisparo, nDisparosMatar, nDisparosMatarCabeza);
     }
 
     @Override
@@ -149,15 +149,13 @@ public class Arma implements Serializable {
                 "id=" + id +
                 ", nombre='" + nombre + '\'' +
                 ", tipo='" + tipo + '\'' +
-                ", tipo_municion='" + tipo_municion + '\'' +
+                ", tipoMunicion='" + tipoMunicion + '\'' +
                 ", danho=" + danho +
-                ", capacidad_balas=" + capacidad_balas +
+                ", capacidadBalas=" + capacidadBalas +
                 ", rango=" + rango +
-                ", tasa_disparo='" + tasa_disparo + '\'' +
-                ", n_disparos_matar=" + n_disparos_matar +
-                ", n_disparos_matar_cabeza=" + n_disparos_matar_cabeza +
+                ", tasaDisparo='" + tasaDisparo + '\'' +
+                ", nDisparosMatar=" + nDisparosMatar +
+                ", nDisparosMatarCabeza=" + nDisparosMatarCabeza +
                 '}';
     }
-
-
 }

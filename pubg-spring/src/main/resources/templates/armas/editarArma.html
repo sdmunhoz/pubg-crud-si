@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html th:replace="~{fragmentos/plantilla::pagina(~{this::title}, ~{this::body})}" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>Editar/crear Arma</title>
+</head>
+
+<body>
+<h1 class="center-text" th:text="${esNuevo} ? 'Crear Arma' : 'Editar Arma'"></h1>
+
+<form th:object="${arma}" class="form-horizontal" id="jugador-form" method="post">
+  <div class="form-group has-feedback">
+
+    <div class="form-group row">
+      <label class="col-2 control-label">Id</label>
+      <label class="col-10 form-control" th:text="${esNuevo} ? '-' : *{id}"></label>
+      <label class="col-2 control-label">Nombre</label>
+      <input class="col-10 form-control" th:field="*{nombre}" size="30" maxlength="100" />
+      <label class="col-2 control-label">Tipo</label>
+      <input class="col-10 form-control" th:field="*{tipo}" size="30" maxlength="100" />
+      <label class="col-2 control-label">Tipo Municion</label>
+      <input class="col-10 form-control" th:field="*{tipoMunicion}" size="30" maxlength="100" />
+      <label class="col-2 control-label">Danho</label>
+      <input class="col-10 form-control" th:field="*{danho}" size="30" maxlength="100" />
+      <label class="col-2 control-label">Capacidad Balas</label>
+      <input class="col-10 form-control" th:field="*{capacidadBalas}" size="30" maxlength="100" />
+      <label class="col-2 control-label">Rango</label>
+      <input class="col-10 form-control" th:field="*{rango}" size="30" maxlength="100" />
+      <label class="col-2 control-label">Tasa Disparo</label>
+      <input class="col-10 form-control" th:field="*{tasaDisparo}" size="30" maxlength="100" />
+      <label class="col-2 control-label">Disparos para matar</label>
+      <input class="col-10 form-control" th:field="*{nDisparosMatar}" size="30" maxlength="100" />
+      <label class="col-2 control-label">Disparos en cabeza para matar</label>
+      <input class="col-10 form-control" th:field="*{nDisparosMatarCabeza}" size="30" maxlength="100" />
+    </div>
+
+    <div class="form-group">
+      <button class="btn btn-lg btn-block btn-primary col-2" th:text="${esNuevo} ? 'Crear' : 'Guardar'" type="submit">Guardar</button>
+
+      <a class="btn btn-lg btn-block btn-secondary col-2" th:href="@{/armas/}">Cancelar</a>
+    </div>
+
+
+  </div>
+
+</form>
+
+
+
+</body>
+</html>

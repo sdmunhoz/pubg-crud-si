@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html th:replace="~{fragmentos/plantilla::pagina(~{this::title}, ~{this::body})}" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>Listado de armas</title>
+</head>
+
+<body>
+<h1 class="center-text">Listado de armas</h1>
+
+<form th:action="@{/armas}" method="post" class="form-horizontal" id="buscar-form">
+  <div class="row">
+    <div class="col-10 form-group">
+      <div class="control-group row" id="nombre">
+        <label class="col-2 control-label">Nombre</label>
+        <input class="col-10 form-control" th:name="nombreJugador" size="30" maxlength="80" />
+      </div>
+      <div class="control-group row" id="tipo">
+        <label class="col-2 control-label">Tipo</label>
+        <input class="col-10 form-control" th:name="tipoArma" size="30" maxlength="80" />
+      </div>
+      <div class="control-group row" id="tipoMunicion">
+        <label class="col-2 control-label">Tipo Municion</label>
+        <input class="col-10 form-control" th:name="tipoMunicionArma" size="30" maxlength="80" />
+      </div>
+
+
+    </div>
+
+
+    <div class="col-2 form-group">
+      <button type="submit" class="btn btn-lg btn-block btn-primary">Buscar</button>
+      <button type="submit" class="btn btn-lg btn-block btn-primary">Buscar todos</button>
+    </div>
+  </div>
+</form>
+
+
+<table id="armas" class="table table-striped">
+  <thead>
+  <tr>
+    <th>Id</th>
+    <th>Nombre</th>
+    <th>Tipo</th>
+    <th>Tipo Municion</th>
+    <th>Danho</th>
+    <th>Capacidad Balas</th>
+    <th>Rango</th>
+    <th>Tasa disparo</th>
+    <th>Num disparos matar</th>
+    <th>Num disparos cabeza matar</th>
+    <th />
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="arma : ${armas}">
+    <td th:text="${arma.id}" />
+    <td><a th:href="@{/armas/__${arma.id}__}" th:text="${arma.nombre}"></a></td>
+    <td th:text="${arma.tipo}" />
+    <td th:text="${arma.tipoMunicion}" />
+    <td th:text="${arma.danho}" />
+    <td th:text="${arma.capacidadBalas}" />
+    <td th:text="${arma.rango}" />
+    <td th:text="${arma.tasaDisparo}" />
+    <td th:text="${arma.nDisparosMatar}" />
+    <td th:text="${arma.nDisparosMatarCabeza}" />
+    <td><a class="btn btn-primary" th:href="@{/armas/__${arma.id}__}">Editar</a> <a
+            class="btn btn-primary" th:href="@{/armas/__${arma.id}__/eliminar}"
+    >Borrar</a></td>
+  </tr>
+  </tbody>
+</table>
+
+<br />
+
+<a class="col-2 btn btn-lg btn-block btn-primary" th:href="@{/armas/nuevo}">Nueva Arma</a>
+</body>
+</html>
