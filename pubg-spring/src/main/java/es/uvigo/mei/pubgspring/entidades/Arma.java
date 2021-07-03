@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 @Entity
 public class Arma implements Serializable {
@@ -20,7 +19,7 @@ public class Arma implements Serializable {
 
     private String tipo;
 
-    private Double tipo_municion;
+    private String tipo_municion;
 
     private int danho;
 
@@ -28,7 +27,7 @@ public class Arma implements Serializable {
 
     private int rango;
 
-    private Double tasa_disparo;
+    private String tasa_disparo;
 
     private int n_disparos_matar;
 
@@ -38,8 +37,8 @@ public class Arma implements Serializable {
     public Arma() {
     }
 
-    public Arma(String nombre, String tipo, Double tipo_municion, int danho, int capacidad_balas, int rango,
-                Double tasa_disparo, int n_disparos_matar, int n_disparos_matar_cabeza) {
+    public Arma(String nombre, String tipo, String tipo_municion, int danho, int capacidad_balas, int rango,
+                String tasa_disparo, int n_disparos_matar, int n_disparos_matar_cabeza) {
         this.nombre = nombre;
         this.tipo = tipo;
         this.tipo_municion = tipo_municion;
@@ -75,11 +74,11 @@ public class Arma implements Serializable {
         this.tipo = tipo;
     }
 
-    public Double getTipo_municion() {
+    public String getTipo_municion() {
         return tipo_municion;
     }
 
-    public void setTipo_municion(Double tipo_municion) {
+    public void setTipo_municion(String tipo_municion) {
         this.tipo_municion = tipo_municion;
     }
 
@@ -107,11 +106,11 @@ public class Arma implements Serializable {
         this.rango = rango;
     }
 
-    public Double getTasa_disparo() {
+    public String getTasa_disparo() {
         return tasa_disparo;
     }
 
-    public void setTasa_disparo(Double tasa_disparo) {
+    public void setTasa_disparo(String tasa_disparo) {
         this.tasa_disparo = tasa_disparo;
     }
 
@@ -131,12 +130,33 @@ public class Arma implements Serializable {
         this.n_disparos_matar_cabeza = n_disparos_matar_cabeza;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Arma arma = (Arma) o;
+        return danho == arma.danho && capacidad_balas == arma.capacidad_balas && rango == arma.rango && n_disparos_matar == arma.n_disparos_matar && n_disparos_matar_cabeza == arma.n_disparos_matar_cabeza && id.equals(arma.id) && nombre.equals(arma.nombre) && Objects.equals(tipo, arma.tipo) && Objects.equals(tipo_municion, arma.tipo_municion) && Objects.equals(tasa_disparo, arma.tasa_disparo);
+    }
 
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nombre, tipo, tipo_municion, danho, capacidad_balas, rango, tasa_disparo, n_disparos_matar, n_disparos_matar_cabeza);
+    }
 
     @Override
     public String toString() {
-        return "Arma{" + "id=" + id + ", nombre=" + nombre + '}';
+        return "Arma{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", tipo='" + tipo + '\'' +
+                ", tipo_municion='" + tipo_municion + '\'' +
+                ", danho=" + danho +
+                ", capacidad_balas=" + capacidad_balas +
+                ", rango=" + rango +
+                ", tasa_disparo='" + tasa_disparo + '\'' +
+                ", n_disparos_matar=" + n_disparos_matar +
+                ", n_disparos_matar_cabeza=" + n_disparos_matar_cabeza +
+                '}';
     }
 
 

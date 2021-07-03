@@ -28,7 +28,7 @@ import es.uvigo.mei.pubgspring.servicios.JugadorService;
 import es.uvigo.mei.pubgspring.servicios.PartidaService;
 
 @Controller
-@RequestMapping("/jugador")
+@RequestMapping("/jugadores")
 public class JugadorController {
     @Autowired
     JugadorService jugadorService;
@@ -64,13 +64,18 @@ public class JugadorController {
                                             @RequestParam(required = false) String cuentaJugador, @RequestParam(required = false) Long idPartida,
                                             Model modelo) {
         List<Jugador> jugadores;
+        System.out.println('1');
         if (idPartida != null) {
             jugadores = jugadorService.buscarPorPartidaId(idPartida);
+            System.out.println('1');
         } else if ((nombreJugador != null) && !nombreJugador.isEmpty()) {
+            System.out.println('2');
             jugadores = jugadorService.buscarPorNombre(nombreJugador);
         } else if ((cuentaJugador != null) && !cuentaJugador.isEmpty()) {
+            System.out.println('3');
             jugadores = jugadorService.buscarPorCuenta(cuentaJugador);
         } else {
+            System.out.println('4');
             jugadores = jugadorService.buscarTodos();
         }
         modelo.addAttribute("jugadores", jugadores);

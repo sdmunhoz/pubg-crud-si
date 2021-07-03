@@ -22,6 +22,7 @@
       <div class="control-group row" id="partida">
         <label class="col-2 control-label">Partida</label>
         <select class="col-10 form-control" th:name="idPartida">
+          <option value="" selected disabled hidden>Choose here</option>
           <option th:each="partida : ${partidas}" th:value="${partida.id}" th:text="${partida.mapa}">Nombre partida</option>
         </select>
       </div>

@@ -41,37 +41,27 @@ public class PartidaController {
         modelo.addAttribute("tamEquipoPartida", "");
         modelo.addAttribute("esEventoPartida", "");
         modelo.addAttribute("esJuegocustomPartida", "");
-        return "partida/listado_partidas";
+        return "partida/listadoPartidas";
     }
 
     @PostMapping
     public String actualizarListarPartida(@RequestParam(required = false) String areaPartida,@RequestParam(required = false) String camaraPartida,
-                                          @RequestParam(required = false) int duracionPartida,@RequestParam(required = false) String mapaPartida,
-                                          @RequestParam(required = false) String modoPartida,@RequestParam(required = false) int tamEquipoPartida,
-                                          @RequestParam(required = false) boolean esEventoPartida,@RequestParam(required = false) boolean esJuegocustomPartida,
+                                          @RequestParam(required = false) String mapaPartida, @RequestParam(required = false) String modoPartida,
                                            Model modelo) {
         List<Partida> partidas;
         if ((areaPartida != null) && !areaPartida.isEmpty()) {
             partidas = partidaService.buscarPorArea(areaPartida);
         } else if ((camaraPartida != null) && !camaraPartida.isEmpty()) {
             partidas = partidaService.buscarPorCamara(camaraPartida);
-        } else if (duracionPartida != 0) {
-            partidas = partidaService.buscarPorDuracion(duracionPartida);
         } else if ((mapaPartida != null) && !mapaPartida.isEmpty()) {
             partidas = partidaService.buscarPorMapa(mapaPartida);
         } else if ((modoPartida != null) && !modoPartida.isEmpty()) {
             partidas = partidaService.buscarPorModo(modoPartida);
-        } else if (tamEquipoPartida != 0)  {
-            partidas = partidaService.buscarPorTamEq(tamEquipoPartida);
-        } else if (esEventoPartida != false) {
-            partidas = partidaService.buscarPorEsEvento(esEventoPartida);
-        } else if (esJuegocustomPartida != false) {
-            partidas = partidaService.buscarPorEsJuegocustom(esJuegocustomPartida);
         } else {
             partidas = partidaService.buscarTodos();
         }
         modelo.addAttribute("partidas", partidas);
-        return "partida/listado_partidas";
+        return "partida/listadoPartidas";
     }
 
     @GetMapping("nuevo")
@@ -81,7 +71,7 @@ public class PartidaController {
         ModelAndView result = new ModelAndView();
         result.addObject("partida", partida);
         result.addObject("esNuevo", true);
-        result.setViewName("partida/editar_partida");
+        result.setViewName("partida/editarPartida");
         return result;
     }
 
@@ -101,7 +91,7 @@ public class PartidaController {
             Partida partida = partidaService.buscarPorId(id);
             modelo.addAttribute("partida", partida);
             modelo.addAttribute("esNuevo", false);
-            return "partida/editar_partida";
+            return "partida/editarPartida";
         } catch (EntityNotFoundException e) {
             modelo.addAttribute("error", "Partida no encontrada");
             return "error";
