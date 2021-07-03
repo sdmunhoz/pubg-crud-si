@@ -8,6 +8,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -121,15 +122,15 @@ public class PartidaController {
         }
     }
 
-    @PostMapping(path = "{id}", params = "anadirPartida")
+    @PostMapping(path = "{id}", params = "anadirJugador")
     public String anadirJugador(@PathVariable("id") Long idPartida, @RequestParam("idJugador") Long idJugador,
-                                @RequestParam("fecha") Date fecha) {
+                                @RequestParam("fecha") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fecha) {
         if ((idJugador != null) && (fecha != null)) {
             Partida partida = partidaService.buscarPorId(idPartida);
             Jugador jugador = jugadorService.buscarPorId(idJugador);
             jugadorService.crearJugadorPartida(new JugadorPartida(jugador, partida, fecha));
         }
-        return "redirect:/partidas/3";
+        return "redirect:/partidas/"+idPartida;
     }
 
     @PostMapping(path = "{id}", params = "eliminarJugador")
