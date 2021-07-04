@@ -93,6 +93,16 @@ public class UbicacionController {
         return result;
     }
 
+    @PostMapping("/nuevo")
+    public String crearUbicacion( @Valid @ModelAttribute Ubicacion ubicacion, BindingResult resultado) {
+        if (!resultado.hasErrors()) {
+            ubicacionService.crear(ubicacion);
+            return "redirect:/ubicaciones";
+        } else {
+            return null;
+        }
+    }
+
     /**
      * @Valid indica que se apliquen las validaciones BeanValidation declaradas en
      * el correspondiente tipo
@@ -103,8 +113,6 @@ public class UbicacionController {
      * parametros de la peticion o Model con atributos de los
      * objetos reales
      */
-
-
     @GetMapping("{id}")
     public String prepararEditarUbicacion(@PathVariable("id") Long id, Model modelo) {
         try {
@@ -133,7 +141,7 @@ public class UbicacionController {
 
     @GetMapping("/parametros/{id}")
     public String prepararListarParametros(@PathVariable("id") Long id, Model modelo) {
-        List<Parametro> parametros = parametrosService.findByUbicacionId(id);
+        List<Parametro> parametros = parametrosService.buscarPorUbicacionId(id);
         modelo.addAttribute("parametros", parametros);
         modelo.addAttribute("ubicacionId", id);
         return "ubicaciones/listadoParametros";
@@ -147,11 +155,11 @@ public class UbicacionController {
         parametro.setUbicacion(ubicacion);
         ModelAndView result = new ModelAndView();
         result.addObject("parametro", parametro);
+        result.addObject("ubicacionId", id);
         result.addObject("esNuevo", true);
         result.setViewName("ubicaciones/editarParametro");
         return result;
     }
-
 
     /**
      * @Valid indica que se apliquen las validaciones BeanValidation declaradas en
@@ -163,13 +171,41 @@ public class UbicacionController {
      * parametros de la peticion o Model con atributos de los
      * objetos reales
      */
-    @PostMapping("/parametros/nuevo")
-    public String crearParametro(@Valid @ModelAttribute Parametro parametro, BindingResult resultado) {
+    @PostMapping("/parametros/nuevo/{id}")
+    public String crearParametro(@PathParam("id") Long id, @Valid @ModelAttribute Parametro parametro, BindingResult resultado) {
         if (!resultado.hasErrors()) {
+            parametro.setId(null);
             parametrosService.crear(parametro);
-            return "redirect:/ubicaciones/parametros/";
+            return "redirect:/ubicaciones/parametros/"+parametro.getUbicacion().getId();
         } else {
             return null;
+        }
+    }
+
+    @PostMapping("/parametros/{idUbi}/{idParam}")
+    public String actualizarParametro(@PathParam("idUbi") Long idUbi,@PathParam("idParam") Long id, @Valid @ModelAttribute Parametro parametro, BindingResult resultado) {
+        if (!resultado.hasErrors()) {
+            /*Ubicacion ubicacion = ubicacionService.buscarPorId(idUbi);
+            parametro.setUbicacion(ubicacion);*/
+            parametro.setId(id);
+            parametrosService.modificar(parametro);
+            return "redirect:/ubicaciones/parametros/"+idUbi+"/"+parametro.getId();
+        } else {
+            return null;
+        }
+    }
+
+    @GetMapping("/parametros/{idUbi}/{idParam}")
+    public String prepararEditarParametro(@PathVariable("idUbi") Long idUbi,@PathVariable("idParam") Long id, Model modelo) {
+        try {
+            Parametro parametro = parametrosService.buscarPorId(id);
+            modelo.addAttribute("parametro", parametro);
+            modelo.addAttribute("id", id);
+            modelo.addAttribute("esNuevo", false);
+            return "ubicaciones/editarParametro";
+        } catch (EntityNotFoundException e) {
+            modelo.addAttribute("error", "ubicacion no encontrada");
+            return "error";
         }
     }
 

@@ -46,11 +46,10 @@
   <tbody>
   <tr th:each="parametro : ${parametros}">
     <td th:text="${parametro.id}" />
-    <td><a th:href="@{/ubicaciones/parametros/__${parametro.id}__}" th:text="${parametro.id}"></a></td>
-    <td th:text="${parametro.esZonaAzul}"/>
+    <td><a th:href="@{/ubicaciones/parametros/__${parametro.id}__}" th:text="${parametro.esZonaAzul}"></a></td>
     <td th:text="${parametro.esZonaRoja}"/>
     <td th:text="${parametro.tamCupula}"/>
-    <td><a class="btn btn-primary" th:href="@{/ubicaciones/parametros/__${parametro.id}__}">Editar</a> </td>
+    <td><a class="btn btn-primary" th:href="@{/ubicaciones/parametros/__${ubicacionId}__/__${parametro.id}__}">Editar</a> </td>
   </tr>
   </tbody>
 </table>

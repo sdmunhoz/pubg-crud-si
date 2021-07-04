@@ -15,23 +15,21 @@ public class Parametro implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
-    @ManyToOne
-    private Ubicacion ubicacion;
-
     private String tamCupula;
 
     private boolean esZonaAzul;
 
     private boolean esZonaRoja;
 
+    @ManyToOne
+    private Ubicacion ubicacion;
+
 
 
 
     public Parametro(){}
 
-    public Parametro(Long id, boolean esZonaAzul, boolean esZonaRoja,String tamCupula, Ubicacion ubicacion ) {
-        this.id = id;
+    public Parametro( boolean esZonaAzul, boolean esZonaRoja,String tamCupula, Ubicacion ubicacion ) {
         this.ubicacion = ubicacion;
         this.tamCupula = tamCupula;
         this.esZonaAzul = esZonaAzul;
@@ -81,11 +79,7 @@ public class Parametro implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Parametro that = (Parametro) o;
-        return esZonaAzul == that.esZonaAzul && esZonaRoja == that.esZonaRoja && Objects.equals(id, that.id) && Objects.equals(ubicacion, that.ubicacion) && Objects.equals(tamCupula, that.tamCupula);
-    }
+      return true; }
 
     @Override
     public int hashCode() {

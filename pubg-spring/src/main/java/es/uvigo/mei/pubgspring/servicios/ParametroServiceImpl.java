@@ -46,7 +46,7 @@ public class ParametroServiceImpl implements ParametroService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Parametro> buscarPorUbicacion(Long idUbicacion){
+    public List<Parametro> buscarPorUbicacionId(Long idUbicacion){
         return parametroDAO.findByUbicacionId(idUbicacion);
     }
 

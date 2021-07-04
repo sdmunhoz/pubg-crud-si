@@ -15,7 +15,7 @@ public interface ParametroService {
 
     public List<Parametro> buscarTodos();
 
-    public List<Parametro> buscarPorUbicacion(Long idUbicacion);
+    public List<Parametro> buscarPorUbicacionId(Long idUbicacion);
 
 
 }
