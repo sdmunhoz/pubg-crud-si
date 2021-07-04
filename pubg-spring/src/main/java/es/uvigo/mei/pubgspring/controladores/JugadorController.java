@@ -144,8 +144,11 @@ public class JugadorController {
      */
     @PostMapping("nuevo")
     public String crearJugador(@Valid @ModelAttribute Jugador jugador, BindingResult resultado) {
-        if (!resultado.hasErrors()) {
-            jugadorService.crear(jugador);
+        List<Jugador> j = jugadorService.buscarPorCuenta(jugador.getCuenta());
+        if (!resultado.hasErrors() ) {
+            if(j.isEmpty()) {
+                jugadorService.crear(jugador);
+            }
             return "redirect:/jugadores";
         } else {
             return null;

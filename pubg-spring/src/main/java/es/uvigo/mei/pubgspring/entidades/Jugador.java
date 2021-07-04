@@ -56,14 +56,23 @@ public class Jugador implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Jugador jugador = (Jugador) o;
-        return Objects.equals(id, jugador.id) && Objects.equals(cuenta, jugador.cuenta) && Objects.equals(nombre, jugador.nombre);
+        return id.equals(jugador.id) &&
+
+                Objects.equals(nombre, jugador.nombre) &&
+                Objects.equals(cuenta, jugador.cuenta);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, cuenta, nombre);
-    }
+        if(this.id != null){
+            return this.id.hashCode();
+        }
 
+        int hash = 3;
+        hash = 41 * hash + Objects.hashCode(this.nombre);
+        hash = 41 * hash + Objects.hashCode(this.cuenta);
+        return hash;
+    }
     @Override
     public String toString() {
         return "Jugador{" + "id=" + id + "cuenta=" + cuenta + ", nombre=" + nombre + '}';
