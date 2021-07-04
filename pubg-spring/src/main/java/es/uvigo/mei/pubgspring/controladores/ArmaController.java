@@ -1,7 +1,9 @@
 package es.uvigo.mei.pubgspring.controladores;
 
 import es.uvigo.mei.pubgspring.entidades.Arma;
+import es.uvigo.mei.pubgspring.entidades.Kills;
 import es.uvigo.mei.pubgspring.servicios.ArmaService;
+import es.uvigo.mei.pubgspring.servicios.KillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +22,8 @@ public class ArmaController {
     @Autowired
     ArmaService armaService;
 
+    @Autowired
+    KillService killService;
     /**
      * Model encapsula el modelo (en este caso sera un Model vacio para ser
      * inicializado)
@@ -71,7 +75,12 @@ public class ArmaController {
     public String borrarArma(@PathVariable("id") Long id, Model modelo) {
         Arma arma = armaService.buscarPorId(id);
         if (arma != null) {
-
+            List<Kills> kills = (List<Kills>) killService.buscarPorArma(id);
+            if(kills!=null) {
+                for (Kills k : kills) {
+                    killService.eliminar(k);
+                }
+            }
             armaService.eliminar(arma);
             return "redirect:/armas";
         } else {

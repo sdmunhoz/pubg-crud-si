@@ -1,15 +1,14 @@
 package es.uvigo.mei.pubgspring.entidades;
 
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
-    @Entity
+@Entity
     @IdClass(JugadorPartidaId.class)
     public class JugadorPartida implements Serializable {
 
@@ -21,9 +20,17 @@ import javax.persistence.ManyToOne;
         @ManyToOne
         private Partida partida;
 
+        @Temporal(TemporalType.DATE)
+        @DateTimeFormat(pattern = "yyyy-MM-dd")
         private Date fecha;
 
         public JugadorPartida() {
+        }
+
+        public JugadorPartida(Jugador jugador, Partida partida) {
+            this.jugador = jugador;
+            this.partida = partida;
+            this.fecha = null;
         }
 
         public JugadorPartida(Jugador jugador, Partida partida, Date fecha) {

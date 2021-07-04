@@ -14,4 +14,5 @@ public interface JugadorDAO extends JpaRepository<Jugador, Long>{
     List<Jugador> findByCuentaContaining(String cuenta);
     @Query("SELECT aa.jugador FROM JugadorPartida AS aa WHERE aa.partida.id = :partidaId")
     List<Jugador> findByPartidaId(Long partidaId);
+
 }

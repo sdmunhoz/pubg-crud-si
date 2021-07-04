@@ -7,6 +7,8 @@ import java.util.List;
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 
+import es.uvigo.mei.pubgspring.entidades.Kills;
+import es.uvigo.mei.pubgspring.servicios.KillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -37,6 +39,9 @@ public class PartidaController {
 
     @Autowired
     JugadorService jugadorService;
+
+    @Autowired
+    KillService killService;
 
     @ModelAttribute("jugadores")
     public List<Jugador> crearListaJugadores() {
@@ -138,6 +143,18 @@ public class PartidaController {
 
         if (idPartida != null) {
             jugadorService.eliminarJugadorPartida(idJugador, idPartida);
+            List<Kills> killsV = (List<Kills>) killService.buscarPorVictima(idJugador);
+            if(killsV!=null) {
+                for (Kills k : killsV) {
+                    killService.eliminar(k);
+                }
+            }
+            List<Kills> killsA = (List<Kills>) killService.buscarPorAsesino(idJugador);
+            if(killsA!=null) {
+                for (Kills k : killsA) {
+                    killService.eliminar(k);
+                }
+            }
         }
         return "redirect:/partidas/"+idPartida;
     }
@@ -154,6 +171,12 @@ public class PartidaController {
             if(jugadorPartida!=null) {
                 for (JugadorPartida jp : jugadorPartida) {
                     jugadorService.eliminarJugadorPartida(jp);
+                }
+            }
+            List<Kills> kills = (List<Kills>) killService.buscarPorPartida(id);
+            if(kills!=null) {
+                for (Kills k : kills) {
+                    killService.eliminar(k);
                 }
             }
             partidaService.eliminar(partida);

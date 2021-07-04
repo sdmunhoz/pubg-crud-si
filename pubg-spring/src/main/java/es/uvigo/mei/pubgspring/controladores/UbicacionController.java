@@ -133,7 +133,7 @@ public class UbicacionController {
 
     @GetMapping("/parametros/{id}")
     public String prepararListarParametros(@PathVariable("id") Long id, Model modelo) {
-        List<Parametro> parametros = parametrosService.findByUbicacionId(id);
+        List<Parametro> parametros = parametrosService.buscarPorUbicacion(id);
         modelo.addAttribute("parametros", parametros);
         modelo.addAttribute("ubicacionId", id);
         return "ubicaciones/listadoParametros";

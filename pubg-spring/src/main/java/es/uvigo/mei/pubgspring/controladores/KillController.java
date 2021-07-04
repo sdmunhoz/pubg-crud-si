@@ -1,8 +1,10 @@
 package es.uvigo.mei.pubgspring.controladores;
 
 import es.uvigo.mei.pubgspring.entidades.*;
+import es.uvigo.mei.pubgspring.servicios.JugadorService;
 import es.uvigo.mei.pubgspring.servicios.KillService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -19,6 +21,11 @@ import java.util.List;
 public class KillController {
     @Autowired
     KillService killService;
+
+    @Autowired
+    JugadorService jugadorService;
+
+
 
     /**
      * Model encapsula el modelo (en este caso sera un Model vacio para ser
@@ -119,6 +126,44 @@ public class KillController {
     @PostMapping("nuevo")
     public String crearKill(@Valid @ModelAttribute Kills kill, BindingResult resultado) {
         if (!resultado.hasErrors()) {
+            List<JugadorPartida> j = jugadorService.buscarJugadorPartidaPorJugadorId(kill.getAsesino().getId());
+            List<JugadorPartida> j2 = jugadorService.buscarJugadorPartidaPorJugadorId(kill.getVictima().getId());
+            List<JugadorPartida> p = jugadorService.buscarJugadorPartidaPorPartidaId(kill.getPartida().getId());
+
+            if(p==null){
+                jugadorService.crearJugadorPartida(kill.getVictima(),kill.getPartida(),null);
+                jugadorService.crearJugadorPartida(kill.getAsesino(),kill.getPartida(),null);
+
+            }else{
+                if(j==null){
+                    jugadorService.crearJugadorPartida(kill.getAsesino(),kill.getPartida(),new Date(1997-04-24));
+                }
+                if(j2==null){
+                    jugadorService.crearJugadorPartida(kill.getVictima(),kill.getPartida(),new Date(1997-04-24));
+                }
+                if(j!=null || j2!=null){
+                    boolean esta1 =false;
+                    boolean esta2 =false;
+                    for (JugadorPartida jp:j) {
+                        if(jp.getPartida().getId()==kill.getPartida().getId()){
+                            esta1=true;
+                        }
+                    }
+                    for (JugadorPartida jp2:j2) {
+                        if(jp2.getPartida().getId()==kill.getPartida().getId()){
+                            esta2=true;
+                        }
+                    }
+                    if (esta1==false){
+                        jugadorService.crearJugadorPartida(kill.getAsesino(),kill.getPartida(),new Date(1997-04-24));
+                    }
+                    if(esta2==false){
+                        jugadorService.crearJugadorPartida(kill.getVictima(),kill.getPartida(),new Date(1997-04-24));
+                    }
+                }
+            }
+
+
             killService.crear(kill);
             return "redirect:/kills";
         } else {
