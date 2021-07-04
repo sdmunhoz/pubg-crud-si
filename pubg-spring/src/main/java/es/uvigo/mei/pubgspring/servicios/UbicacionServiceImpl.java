@@ -1,14 +1,14 @@
 package es.uvigo.mei.pubgspring.servicios;
 
-        import java.util.List;
+import java.util.List;
 
-        import es.uvigo.mei.pubgspring.entidades.Parametro;
-        import org.springframework.beans.factory.annotation.Autowired;
-        import org.springframework.stereotype.Service;
-        import org.springframework.transaction.annotation.Transactional;
+import es.uvigo.mei.pubgspring.entidades.Parametro;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-        import es.uvigo.mei.pubgspring.daos.UbicacionDAO;
-        import es.uvigo.mei.pubgspring.entidades.Ubicacion;
+import es.uvigo.mei.pubgspring.daos.UbicacionDAO;
+import es.uvigo.mei.pubgspring.entidades.Ubicacion;
 
 @Service
 public class UbicacionServiceImpl implements UbicacionService {
@@ -58,7 +58,9 @@ public class UbicacionServiceImpl implements UbicacionService {
     }
 
     @Override
-    public List<Parametro> buscarParametrosPorId(Long id){ return ubicacionDAO.findParameteresByUbicacionId(id);}
+    public List<Parametro> buscarParametrosPorId(Long id) {
+        return ubicacionDAO.findParameteresByUbicacionId(id);
+    }
 
 
 }

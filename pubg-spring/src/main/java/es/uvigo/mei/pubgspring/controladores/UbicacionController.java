@@ -4,6 +4,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 import java.util.List;
+
 import es.uvigo.mei.pubgspring.entidades.Parametro;
 import es.uvigo.mei.pubgspring.entidades.Ubicacion;
 import es.uvigo.mei.pubgspring.servicios.ParametroService;
@@ -94,7 +95,7 @@ public class UbicacionController {
     }
 
     @PostMapping("/nuevo")
-    public String crearUbicacion( @Valid @ModelAttribute Ubicacion ubicacion, BindingResult resultado) {
+    public String crearUbicacion(@Valid @ModelAttribute Ubicacion ubicacion, BindingResult resultado) {
         if (!resultado.hasErrors()) {
             ubicacionService.crear(ubicacion);
             return "redirect:/ubicaciones";
@@ -126,18 +127,15 @@ public class UbicacionController {
         }
     }
 
-   /* @GetMapping("/parametros/{id}")
-    public String prepararEditarParametros(@PathVariable("id") Long id, Model modelo) {
-        try {
-            Ubicacion ubicacion = ubicacionService.buscarPorId(id);
-            modelo.addAttribute("ubicacion", ubicacion);
-            modelo.addAttribute("esNuevo", false);
-            return "ubicaciones/listadoParametros";
-        } catch (EntityNotFoundException e) {
-            modelo.addAttribute("error", "parametros de ubicacion no encontrados");
-            return "error";
+    @PostMapping("{id}")
+    public String actualizarubicacion(@Valid @ModelAttribute Ubicacion ubicacion, BindingResult resultado) {
+        if (!resultado.hasErrors()) {
+            ubicacionService.modificar(ubicacion);
+            return "redirect:/ubicaciones";
+        } else {
+            return null;
         }
-    }*/
+    }
 
     @GetMapping("/parametros/{id}")
     public String prepararListarParametros(@PathVariable("id") Long id, Model modelo) {
@@ -155,7 +153,6 @@ public class UbicacionController {
         parametro.setUbicacion(ubicacion);
         ModelAndView result = new ModelAndView();
         result.addObject("parametro", parametro);
-        result.addObject("ubicacionId", id);
         result.addObject("esNuevo", true);
         result.setViewName("ubicaciones/editarParametro");
         return result;
@@ -174,29 +171,28 @@ public class UbicacionController {
     @PostMapping("/parametros/nuevo/{id}")
     public String crearParametro(@PathParam("id") Long id, @Valid @ModelAttribute Parametro parametro, BindingResult resultado) {
         if (!resultado.hasErrors()) {
-            parametro.setId(null);
             parametrosService.crear(parametro);
-            return "redirect:/ubicaciones/parametros/"+parametro.getUbicacion().getId();
+            return "redirect:/ubicaciones/parametros/" + parametro.getUbicacion().getId();
         } else {
             return null;
         }
     }
 
     @PostMapping("/parametros/{idUbi}/{idParam}")
-    public String actualizarParametro(@PathParam("idUbi") Long idUbi,@PathParam("idParam") Long id, @Valid @ModelAttribute Parametro parametro, BindingResult resultado) {
+    public String actualizarParametro(@Valid @ModelAttribute Parametro parametro, BindingResult resultado) {
         if (!resultado.hasErrors()) {
             /*Ubicacion ubicacion = ubicacionService.buscarPorId(idUbi);
             parametro.setUbicacion(ubicacion);*/
-            parametro.setId(id);
+            //parametro.setId(id);
             parametrosService.modificar(parametro);
-            return "redirect:/ubicaciones/parametros/"+idUbi+"/"+parametro.getId();
+            return "redirect:/ubicaciones/parametros/" + parametro.getUbicacion().getId();
         } else {
             return null;
         }
     }
 
     @GetMapping("/parametros/{idUbi}/{idParam}")
-    public String prepararEditarParametro(@PathVariable("idUbi") Long idUbi,@PathVariable("idParam") Long id, Model modelo) {
+    public String prepararEditarParametro(@PathVariable("idUbi") Long idUbi, @PathVariable("idParam") Long id, Model modelo) {
         try {
             Parametro parametro = parametrosService.buscarPorId(id);
             modelo.addAttribute("parametro", parametro);
@@ -209,13 +205,4 @@ public class UbicacionController {
         }
     }
 
-    @PostMapping("{id}")
-    public String actualizarubicacion(@Valid @ModelAttribute Ubicacion ubicacion, BindingResult resultado) {
-        if (!resultado.hasErrors()) {
-            ubicacionService.modificar(ubicacion);
-            return "redirect:/ubicaciones/parametros";
-        } else {
-            return null;
-        }
-    }
 }

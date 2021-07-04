@@ -2,58 +2,61 @@
 <html th:replace="~{fragmentos/plantilla::pagina(~{this::title}, ~{this::body})}" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <title>Listado de parametros</title>
+    <title>Listado de parametros</title>
 </head>
 
 <body>
 <h1 class="center-text">Listado de parametros</h1>
 
 <form th:action="@{/ubicaciones/parametros}" method="post" class="form-horizontal" id="buscar-form">
-  <div class="row">
-    <div class="col-10 form-group">
-      <div class="control-group row" id="zona">
-        <label class="col-2 control-label">Zona Azul</label>
-        <input class="col-10 form-control" th:name="esZonaAzul" size="30" maxlength="80" />
-      </div>
-      <div class="control-group row" id="tiempo">
-        <label class="col-2 control-label">Zona Roja</label>
-        <input class="col-10 form-control" th:name="esZonaRoja" size="30" maxlength="80" />
-      </div>
-      <div class="control-group row" id="tamCupula">
-        <label class="col-2 control-label">Tamaño Cúpula</label>
-        <input class="col-10 form-control" th:name="tamCupula" size="30" maxlength="80" />
-      </div>
+    <div class="row">
+        <div class="col-10 form-group">
+            <div class="control-group row" id="zona">
+                <label class="col-2 control-label">Zona Azul</label>
+                <input class="col-10 form-control" th:name="esZonaAzul" size="30" maxlength="80"/>
+            </div>
+            <div class="control-group row" id="tiempo">
+                <label class="col-2 control-label">Zona Roja</label>
+                <input class="col-10 form-control" th:name="esZonaRoja" size="30" maxlength="80"/>
+            </div>
+            <div class="control-group row" id="tamCupula">
+                <label class="col-2 control-label">Tamaño Cúpula</label>
+                <input class="col-10 form-control" th:name="tamCupula" size="30" maxlength="80"/>
+            </div>
 
-    </div>
+        </div>
 
-    <div class="col-2 form-group">
-      <button type="submit" class="btn btn-lg btn-block btn-primary">Buscar</button>
-      <button type="submit" class="btn btn-lg btn-block btn-primary">Buscar todos</button>
+        <div class="col-2 form-group">
+            <button type="submit" class="btn btn-lg btn-block btn-primary">Buscar</button>
+            <button type="submit" class="btn btn-lg btn-block btn-primary">Buscar todos</button>
+        </div>
     </div>
-  </div>
 </form>
 
 
 <table id="parametros" class="table table-striped">
-  <thead>
-  <tr>
-    <th>Id</th>
-    <th>Zona Azul</th>
-    <th>Zona Roja</th>
-    <th>Tamaño Cúpula</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="parametro : ${parametros}">
-    <td th:text="${parametro.id}" />
-    <td><a th:href="@{/ubicaciones/parametros/__${parametro.id}__}" th:text="${parametro.esZonaAzul}"></a></td>
-    <td th:text="${parametro.esZonaRoja}"/>
-    <td th:text="${parametro.tamCupula}"/>
-    <td><a class="btn btn-primary" th:href="@{/ubicaciones/parametros/__${ubicacionId}__/__${parametro.id}__}">Editar</a> </td>
-  </tr>
-  </tbody>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Zona Azul</th>
+        <th>Zona Roja</th>
+        <th>Tamaño Cúpula</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="parametro : ${parametros}">
+        <td th:text="${parametro.id}"/>
+        <td><a th:href="@{/ubicaciones/parametros/__${parametro.id}__}" th:text="${parametro.esZonaAzul}"></a></td>
+        <td th:text="${parametro.esZonaRoja}"/>
+        <td th:text="${parametro.tamCupula}"/>
+        <td><a class="btn btn-primary" th:href="@{/ubicaciones/parametros/__${ubicacionId}__/__${parametro.id}__}">Editar</a>
+        </td>
+    </tr>
+    </tbody>
 </table>
-<br />
-<a class="col-2 btn btn-lg btn-block btn-primary" th:href="@{/ubicaciones/parametros/nuevo/__${ubicacionId}__}">Nuevo parámetro</a>
+<br/>
+<a class="col-3 btn btn-lg btn-primary" th:href="@{/ubicaciones/parametros/nuevo/__${ubicacionId}__}">Nuevo
+    parámetro</a>
+<a class="col-3 btn btn-secondary btn-lg" th:href="@{/ubicaciones}">Cancelar</a>
 </body>
 </html>
