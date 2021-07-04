@@ -10,5 +10,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ParametroDAO extends JpaRepository<Parametro, Long> {
+
+    List<Parametro> findByUbicacionId(Long ubicacionId);
 }
 
