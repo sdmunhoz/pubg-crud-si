@@ -3,6 +3,7 @@ package es.uvigo.mei.pubgspring.servicios;
 import java.util.Date;
 import java.util.List;
 
+import es.uvigo.mei.pubgspring.entidades.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,10 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import es.uvigo.mei.pubgspring.daos.JugadorDAO;
 import es.uvigo.mei.pubgspring.daos.JugadorPartidaDAO;
 import es.uvigo.mei.pubgspring.daos.PartidaDAO;
-import es.uvigo.mei.pubgspring.entidades.Jugador;
-import es.uvigo.mei.pubgspring.entidades.Partida;
-import es.uvigo.mei.pubgspring.entidades.JugadorPartida;
-import es.uvigo.mei.pubgspring.entidades.JugadorPartidaId;
 
 @Service
 public class JugadorServiceImpl implements JugadorService {
@@ -111,7 +108,6 @@ public class JugadorServiceImpl implements JugadorService {
     public List<JugadorPartida> buscarJugadorPartidaPorPartidaId(Long partidaId) {
         return jugadorPartidaDAO.findByPartidaId(partidaId);
     }
-
 
 
 }

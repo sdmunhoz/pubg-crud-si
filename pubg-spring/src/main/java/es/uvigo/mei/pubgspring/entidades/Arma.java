@@ -140,7 +140,21 @@ public class Arma implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nombre, tipo, tipoMunicion, danho, capacidadBalas, rango, tasaDisparo, nDisparosMatar, nDisparosMatarCabeza);
+        if(this.id != null){
+           return this.id.hashCode();
+        }
+
+        int hash = 3;
+        hash = 41 * hash + Objects.hashCode(this.nombre);
+        hash = 41 * hash + Objects.hashCode(this.tipo);
+        hash = 41 * hash + Objects.hashCode(this.tipoMunicion);
+        hash = 41 * hash + Objects.hashCode(this.danho);
+        hash = 41 * hash + Objects.hashCode(this.capacidadBalas);
+        hash = 41 * hash + Objects.hashCode(this.rango);
+        hash = 41 * hash + Objects.hashCode(this.tasaDisparo);
+        hash = 41 * hash + Objects.hashCode(this.nDisparosMatar);
+        hash = 41 * hash + Objects.hashCode(this.nDisparosMatarCabeza);
+        return hash;
     }
 
     @Override

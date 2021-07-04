@@ -24,4 +24,5 @@ public interface JugadorService {
     public JugadorPartida buscarJugadorPartidaPorJugadorIdPartidaId(Long jugadorId, Long partidaId);
     public List<JugadorPartida> buscarJugadorPartidaPorJugadorId(Long jugadorId);
     public List<JugadorPartida> buscarJugadorPartidaPorPartidaId(Long partidaId);
+
 }
