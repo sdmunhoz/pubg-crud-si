@@ -58,7 +58,6 @@ public class UbicacionServiceImpl implements UbicacionService {
     }
 
     @Override
-    @Transactional(readOnly=true)
     public List<Parametro> buscarParametrosPorId(Long id){ return ubicacionDAO.findParameteresByUbicacionId(id);}
 
 

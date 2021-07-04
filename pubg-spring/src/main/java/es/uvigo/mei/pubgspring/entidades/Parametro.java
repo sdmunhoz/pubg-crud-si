@@ -25,15 +25,19 @@ public class Parametro implements Serializable {
 
     private boolean esZonaRoja;
 
+
+
+
     public Parametro(){}
 
-    public Parametro(Long id, Ubicacion ubicacion, String tamCupula, boolean esZonaAzul, boolean esZonaRoja) {
+    public Parametro(Long id, boolean esZonaAzul, boolean esZonaRoja,String tamCupula, Ubicacion ubicacion ) {
         this.id = id;
         this.ubicacion = ubicacion;
         this.tamCupula = tamCupula;
         this.esZonaAzul = esZonaAzul;
         this.esZonaRoja = esZonaRoja;
     }
+
 
     public Long getId() {
         return id;

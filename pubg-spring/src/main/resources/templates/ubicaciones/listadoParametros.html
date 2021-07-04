@@ -8,7 +8,7 @@
 <body>
 <h1 class="center-text">Listado de parametros</h1>
 
-<form th:action="@{/parametros/ubicaciones}" method="post" class="form-horizontal" id="buscar-form">
+<form th:action="@{/ubicaciones/parametros}" method="post" class="form-horizontal" id="buscar-form">
   <div class="row">
     <div class="col-10 form-group">
       <div class="control-group row" id="zona">
@@ -55,6 +55,6 @@
   </tbody>
 </table>
 <br />
-<a class="col-2 btn btn-lg btn-block btn-primary" th:href="@{/ubicaciones/parametros/nuevo}">Nuevo parámetro</a>
+<a class="col-2 btn btn-lg btn-block btn-primary" th:href="@{/ubicaciones/parametros/nuevo/__${ubicacionId}__}">Nuevo parámetro</a>
 </body>
 </html>

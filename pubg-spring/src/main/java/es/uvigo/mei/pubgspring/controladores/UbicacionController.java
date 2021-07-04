@@ -1,10 +1,9 @@
 package es.uvigo.mei.pubgspring.controladores;
 
-import java.util.List;
-
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
-
+import javax.websocket.server.PathParam;
+import java.util.List;
 import es.uvigo.mei.pubgspring.entidades.Parametro;
 import es.uvigo.mei.pubgspring.entidades.Ubicacion;
 import es.uvigo.mei.pubgspring.servicios.ParametroService;
@@ -26,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class UbicacionController {
     @Autowired
     UbicacionService ubicacionService;
+    @Autowired
     ParametroService parametrosService;
 
 
@@ -103,15 +103,7 @@ public class UbicacionController {
      * parametros de la peticion o Model con atributos de los
      * objetos reales
      */
-    @PostMapping("nuevo")
-    public String crearUbicacion(@Valid @ModelAttribute Ubicacion ubicacion, BindingResult resultado) {
-        if (!resultado.hasErrors()) {
-            ubicacionService.crear(ubicacion);
-            return "redirect:/ubicaciones";
-        } else {
-            return null;
-        }
-    }
+
 
     @GetMapping("{id}")
     public String prepararEditarUbicacion(@PathVariable("id") Long id, Model modelo) {
@@ -141,22 +133,25 @@ public class UbicacionController {
 
     @GetMapping("/parametros/{id}")
     public String prepararListarParametros(@PathVariable("id") Long id, Model modelo) {
-        List<Parametro> parametros = ubicacionService.buscarParametrosPorId(id);
+        List<Parametro> parametros = parametrosService.findByUbicacionId(id);
         modelo.addAttribute("parametros", parametros);
+        modelo.addAttribute("ubicacionId", id);
         return "ubicaciones/listadoParametros";
+
     }
 
     @GetMapping("/parametros/nuevo/{id}")
     public ModelAndView prepararNuevoParametro(@PathVariable("id") Long id) {
         Ubicacion ubicacion = ubicacionService.buscarPorId(id);
         Parametro parametro = new Parametro();
+        parametro.setUbicacion(ubicacion);
         ModelAndView result = new ModelAndView();
-        result.addObject("ubicacion", ubicacion);
         result.addObject("parametro", parametro);
         result.addObject("esNuevo", true);
         result.setViewName("ubicaciones/editarParametro");
         return result;
     }
+
 
     /**
      * @Valid indica que se apliquen las validaciones BeanValidation declaradas en
@@ -169,10 +164,10 @@ public class UbicacionController {
      * objetos reales
      */
     @PostMapping("/parametros/nuevo")
-    public String crearParametro(@Valid @ModelAttribute Ubicacion ubicacion, BindingResult resultado) {
+    public String crearParametro(@Valid @ModelAttribute Parametro parametro, BindingResult resultado) {
         if (!resultado.hasErrors()) {
-            ubicacionService.crear(ubicacion);
-            return "redirect:/ubicaciones";
+            parametrosService.crear(parametro);
+            return "redirect:/ubicaciones/parametros/";
         } else {
             return null;
         }
@@ -182,7 +177,7 @@ public class UbicacionController {
     public String actualizarubicacion(@Valid @ModelAttribute Ubicacion ubicacion, BindingResult resultado) {
         if (!resultado.hasErrors()) {
             ubicacionService.modificar(ubicacion);
-            return "redirect:/ubicaciones";
+            return "redirect:/ubicaciones/parametros";
         } else {
             return null;
         }

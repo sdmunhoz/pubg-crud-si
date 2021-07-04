@@ -16,6 +16,6 @@ public interface UbicacionDAO extends JpaRepository<Ubicacion, Long> {
 
     List<Ubicacion> findByTiempoContaining(String tiempo);
 
-    @Query(value = "SELECT P.* FROM PARAMETROS P, UBICACION U WHERE P.UBICACION_ID=u.id and u.id=:id",nativeQuery = true)
+    @Query(value = "SELECT P.* FROM PARAMETRO P, UBICACION U WHERE P.UBICACION_ID=u.id and u.id=:id",nativeQuery = true)
     List<Parametro> findParameteresByUbicacionId(@Param("id") Long id);
 }
