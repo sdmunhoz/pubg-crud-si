@@ -2,7 +2,6 @@ package es.uvigo.mei.pubgspring.servicios;
 
 import es.uvigo.mei.pubgspring.entidades.Arma;
 
-import java.util.Date;
 import java.util.List;
 
 public interface ArmaService {

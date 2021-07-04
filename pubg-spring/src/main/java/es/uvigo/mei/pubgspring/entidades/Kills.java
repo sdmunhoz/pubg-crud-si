@@ -4,29 +4,25 @@ import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.*;
 
-public class Kill implements Serializable{
+@Entity
+public class Kills implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Id
     @ManyToOne
     private Jugador asesino;
 
-    @Id
     @ManyToOne
     private Jugador victima;
 
-    @Id
     @ManyToOne
     private Partida partida;
 
-    @Id
     @ManyToOne
     private Arma arma;
 
-    @Id
     @ManyToOne
     private Ubicacion ubicacion;
 
@@ -38,9 +34,9 @@ public class Kill implements Serializable{
 
     private int distancia;
 
-    public Kill(){}
+    public Kills(){}
 
-    public Kill(Long id, Jugador asesino, Jugador victima, Partida partida, Arma arma, Ubicacion ubicacion, String causa, String razon, String categoria, int distancia) {
+    public Kills(Long id, Jugador asesino, Jugador victima, Partida partida, Arma arma, Ubicacion ubicacion, String causa, String razon, String categoria, int distancia) {
         this.id = id;
         this.asesino = asesino;
         this.victima = victima;
@@ -137,8 +133,8 @@ public class Kill implements Serializable{
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Kill kill = (Kill) o;
-        return distancia == kill.distancia && id.equals(kill.id) && Objects.equals(asesino, kill.asesino) && Objects.equals(victima, kill.victima) && Objects.equals(partida, kill.partida) && Objects.equals(arma, kill.arma) && Objects.equals(ubicacion, kill.ubicacion) && Objects.equals(causa, kill.causa) && Objects.equals(razon, kill.razon) && Objects.equals(categoria, kill.categoria);
+        Kills kills = (Kills) o;
+        return distancia == kills.distancia && id.equals(kills.id) && Objects.equals(asesino, kills.asesino) && Objects.equals(victima, kills.victima) && Objects.equals(partida, kills.partida) && Objects.equals(arma, kills.arma) && Objects.equals(ubicacion, kills.ubicacion) && Objects.equals(causa, kills.causa) && Objects.equals(razon, kills.razon) && Objects.equals(categoria, kills.categoria);
     }
 
     @Override

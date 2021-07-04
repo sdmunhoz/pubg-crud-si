@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html th:replace="~{fragmentos/plantilla::pagina(~{this::title}, ~{this::body})}" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>Listado de kills</title>
+</head>
+
+<body>
+<h1 class="center-text">Listado de kills</h1>
+
+<form th:action="@{/kills}" method="post" class="form-horizontal" id="buscar-form">
+  <div class="row">
+    <div class="col-10 form-group">
+
+      <div class="control-group row" id="asesino">
+        <label class="col-2 control-label">Asesino</label>
+        <select class="col-10 form-control" th:name="idAsesino">
+          <option value="" selected disabled hidden>Seleccione Asesino</option>
+          <option th:each="asesino : ${asesinos}" th:value="${asesino.id}" th:text="${asesino.nombre}">Nombre Asesino</option>
+        </select>
+      </div>
+      <div class="control-group row" id="victima">
+        <label class="col-2 control-label">Victima</label>
+        <select class="col-10 form-control" th:name="idVictima">
+          <option value="" selected disabled hidden>Seleccione Victima</option>
+          <option th:each="victima : ${victimas}" th:value="${victima.id}" th:text="${victima.nombre}">Nombre Victima</option>
+        </select>
+      </div>
+      <div class="control-group row" id="arma">
+        <label class="col-2 control-label">Arma</label>
+        <select class="col-10 form-control" th:name="idArma">
+          <option value="" selected disabled hidden>Seleccione Arma</option>
+          <option th:each="arma : ${armas}" th:value="${arma.id}" th:text="${arma.nombre}">Nombre Arma</option>
+        </select>
+      </div>
+      <div class="control-group row" id="partida">
+        <label class="col-2 control-label">Partida</label>
+        <select class="col-10 form-control" th:name="idPartida">
+          <option value="" selected disabled hidden>Seleccione Partida</option>
+          <option th:each="partida : ${partidas}" th:value="${partida.id}" th:text="${partida.mapa+'-'+partida.modo}">Mapa y modo Partida</option>
+        </select>
+      </div>
+      <div class="control-group row" id="ubicacion">
+        <label class="col-2 control-label">Ubicacion</label>
+        <select class="col-10 form-control" th:name="idUbicacion">
+          <option value="" selected disabled hidden>Seleccione Ubicacion</option>
+          <option th:each="ubicacion : ${ubicaciones}" th:value="${ubicacion.id}" th:text="${ubicacion.zona + '-' + ubicacion.tiempo}">Ubicacion</option>
+        </select>
+      </div>
+    </div>
+
+
+    <div class="col-2 form-group">
+      <button type="submit" class="btn btn-lg btn-block btn-primary">Buscar</button>
+      <button type="submit" class="btn btn-lg btn-block btn-primary">Buscar todos</button>
+    </div>
+  </div>
+</form>
+
+
+<table id="kills" class="table table-striped">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Asesino</th>
+    <th>Victima</th>
+    <th>Arma</th>
+    <th>Partida</th>
+    <th>Ubicacion</th>
+    <th>Causa</th>
+    <th>Razon</th>
+    <th>Categoria</th>
+    <th>Distancia</th>
+    <th />
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="kill : ${kills}">
+    <td th:text="${kill.id}" />
+    <td>
+      <span th:if="${kill.asesino}" th:text="${kill.asesino.nombre}"></span>
+      <span th:unless="${kill.asesino}">-</span>
+    </td>
+    <td>
+      <span th:if="${kill.victima}" th:text="${kill.victima.nombre}"></span>
+      <span th:unless="${kill.victima}">-</span>
+    </td>
+    <td>
+      <span th:if="${kill.arma}" th:text="${kill.arma.nombre}"></span>
+      <span th:unless="${kill.arma}">-</span>
+    </td>
+    <td>
+      <span th:if="${kill.partida}" th:text="${kill.partida.mapa}"></span>
+      <span th:unless="${kill.partida}">-</span>
+    </td>
+    <td>
+      <span th:if="${kill.ubicacion}" th:text="${kill.ubicacion.zona}"></span>
+      <span th:unless="${kill.ubicacion}">-</span>
+    </td>
+    <td><a th:href="@{/kills/__${kill.id}__}" th:text="${kill.causa}"></a></td>
+    <td th:text="${kill.razon}" />
+    <td th:text="${kill.categoria}" />
+    <td th:text="${kill.distancia}" />
+    <td><a class="btn btn-primary" th:href="@{/kills/__${kill.id}__}">Editar</a>
+        <a class="btn btn-primary" th:href="@{/kills/__${kill.id}__/eliminar}">Borrar</a>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<br />
+
+<a class="col-2 btn btn-lg btn-block btn-primary" th:href="@{/kills/nuevo}">Nueva Kill</a>
+</body>
+</html>

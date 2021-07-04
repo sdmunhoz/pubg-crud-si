@@ -1,6 +1,5 @@
 package es.uvigo.mei.pubgspring.daos;
 
-import es.uvigo.mei.pubgspring.entidades.Jugador;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

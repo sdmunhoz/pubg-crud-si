@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html th:replace="~{fragmentos/plantilla::pagina(~{this::title}, ~{this::body})}" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>Editar/crear Kill</title>
+</head>
+
+<body>
+<h1 class="center-text" th:text="${esNuevo} ? 'Crear kill' : 'Editar kill'"></h1>
+
+<form th:object="${kill}" class="form-horizontal" id="kill-form" method="post">
+  <div class="form-group has-feedback">
+
+    <div class="form-group">
+      <label class="col-2 control-label">Id</label>
+      <label class="col-10 form-control" th:text="${esNuevo} ? '-' : *{id}" />
+      <label class="col-2 control-label">Asesino</label>
+      <select class="col-10 form-control" th:field="*{asesino}">
+        <option th:each="asesino : ${asesinos}" th:value="${asesino.id}" th:text="${asesino.nombre}">Nombre Asesino</option>
+      </select>
+      <label class="col-2 control-label">Victima</label>
+      <select class="col-10 form-control" th:field="*{victima}">
+        <option th:each="victima : ${victimas}" th:value="${victima.id}" th:text="${victima.nombre}">Nombre Victima</option>
+      </select>
+      <label class="col-2 control-label">Arma</label>
+      <select class="col-10 form-control" th:field="*{arma}">
+        <option th:each="arma : ${armas}" th:value="${arma.id}" th:text="${arma.nombre}">Nombre Arma</option>
+      </select>
+      <label class="col-2 control-label">Partida</label>
+      <select class="col-10 form-control" th:field="*{partida}">
+        <option th:each="partida : ${partidas}" th:value="${partida.id}" th:text="${partida.mapa+'-'+partida.modo}">Mapa y Modo Partida</option>
+      </select>
+      <label class="col-2 control-label">Ubicacion</label>
+      <select class="col-10 form-control" th:field="*{ubicacion}">
+        <option th:each="ubicacion : ${ubicaciones}" th:value="${ubicacion.id}" th:text="${ubicacion.tiempo+'-'+ubicacion.zona}">Tiempo y Zona ubicacion</option>
+      </select>
+      <label class="col-2 control-label">Causa</label>
+      <input class="col-10 form-control" th:field="*{causa}" size="30" maxlength="100" />
+      <label class="col-2 control-label">Razon</label>
+      <input class="col-10 form-control" th:field="*{razon}" size="30" maxlength="100" />
+      <label class="col-2 control-label">Categoria</label>
+      <input class="col-10 form-control" th:field="*{categoria}" size="30" maxlength="100" />
+      <label class="col-2 control-label">Distancia</label>
+      <input class="col-10 form-control" th:field="*{distancia}" size="30" maxlength="100" />
+    </div>
+    <div class="form-group">
+      <button class="btn btn-lg btn-block btn-primary col-2" th:text="${esNuevo} ? 'Crear' : 'Guardar'" type="submit">Guardar</button>
+
+      <a class="btn btn-lg btn-block btn-secondary col-2" th:href="@{/kills/}">Cancelar</a>
+    </div>
+  </div>
+</form>
+
+
+
+</body>
+</html>

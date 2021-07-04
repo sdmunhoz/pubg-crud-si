@@ -13,7 +13,6 @@ public class ArmaServiceImpl implements ArmaService {
     @Autowired
     private ArmaDAO armaDAO;
 
-
     @Override
     @Transactional
     public Arma crear(Arma arma) {
